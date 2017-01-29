@@ -1,0 +1,271 @@
+<!-- FOOTER CONTENT AREA S -->
+<!-- <script type="text/javascript">
+//스평계
+var scope = angular.element('#letDroneFooter').scope().$parent;
+
+var rollVal = scope.rollGaugeData.label;
+var pitchVal = scope.pitchGaugeData.label;
+var yawVal = scope.directionGaugeData.label;
+//console.log(yawVal);
+//$.flightIndicator('#attitude', 'attitude', {roll:rollVal, pitch:pitchVal, direction:yawVal, size:120, showBox : true});
+
+// Update at 20Hz
+/*var increment = 0;
+setInterval(function() {
+
+    attitude.setRoll(30*Math.sin(increment/10));
+    attitude.setPitch(50*Math.sin(increment/20));
+    attitude.setDirection(50*Math.sin(increment/20));
+
+    increment++;
+    
+}, 50);*/
+
+</script> -->
+
+
+<div id="footer" ng-hide="footerHide">
+
+	<!-- 이 부분은 서버 기능 테스트 및 디버그 용도입니다. 
+     혹시 문제가 있으시다면 연락주세요.
+	 홍사용 선임 / 010-6215-1869 / sayong.hong@hanwha.com
+	-->
+	<div>
+		<button type="button" class="debug_protocol_transparent" ng-click="openDebugProtocolPanel()"></button>
+	</div>
+
+	<!--드론 컨트롤 -->
+
+	<div class="droneControl"><button type="button" class="droneList" ng-click="droneConDisplay()"><img src="images/btn/btnControl.gif" alt="드론 컨트롤러"></button>
+		
+		<!-- drone contorl-->
+		<div class="droneConLayer" ng-init="droneCon()" ng-show="droneConOpen">			
+			<div class="conBtn">
+				<button type="button" class="btnTakeOff" ng-click="takeOpen()">Take-Off</button>
+				<button type="button" class="btnLand"  ng-click="flightOpen()">Land</button>
+				<button type="button" class="btnHover">Hover</button>
+				<button type="button" class="btnFlyTo">Fly To</button>
+				<button type="button" class="btnReturn">Return</button>
+			</div>
+			<div class="btnPlay">
+				<button type="button" class="btnStop">Stop</button>
+				<button type="button" class="btnPauseRes">Pause</button>		
+			</div>
+		</div>
+		<!-- drone contorl-->
+
+	</div>
+
+	<!-- vertical speed, ground speed alttude 고도  -->
+	<div class="guageArea">
+		<ul>
+			<li><span class="home">{{droneState|droneStateFilter:droneArmState}}</span></li>
+			<li><span class="auto">{{droneArmState|droneArmStateFilter}}</span></li>
+			<li style="padding-top:16px;">
+				<div drone-guage 
+					drone-guage-data-model="gaugeData.vs"
+					guage-width="55"
+					guage-height="55"
+					guage-label-title="V.S"
+					guage-label-unit="M/s">
+				</div>
+			</li>
+			<li style="padding-top:16px;">
+				<div drone-guage 
+					drone-guage-data-model="gaugeData.gs"
+					guage-width="55"
+					guage-height="55"
+					guage-label-title="G.S"
+					guage-label-unit="M/s">
+				</div>
+			</li>
+			<li style="padding-top:16px;">
+				<div drone-guage 
+					drone-guage-data-model="gaugeData.alt"
+					guage-width="55"
+					guage-height="55"
+					guage-label-title="Alt."
+					guage-label-unit="M/s">
+				</div>
+			</li>
+		</ul>
+	</div>
+	
+	<!-- 평형계 -->
+<!-- 	<div class="inclinometer">
+
+		<div class="txtC mgT04">
+			<img src="images//temp/tempInclinometer.png" alt="평형계">
+		</div>
+	</div> -->
+	<div class="container inclinometer">
+	 
+	        <div class="incMove">
+	            <span show-flight-indicator id="attitude" ng-model="gaugeData"></span>         
+	        </div>
+	         <div class="smincMove">
+	         	<ul>
+	         		<li class="minc01">{{gaugeData.roll.label}}&#176;</li>
+	         		<li class="minc02">{{gaugeData.pitch.label}}&#176;</li>
+	         		<li class="minc03">{{gaugeData.yaw.label}}&#176;</li>
+	         	</ul>
+	        </div>
+	</div>
+
+
+	<div class="distanceInfo">	
+		<ul>
+			<!--다음 지점까지 거리 -->
+			<li class="moveTarget">
+				<div class="valueAarea">
+					<div class="startP">H</div>
+					<div class="passDist">38<span class="sssTxt">M</span></div>
+					<div class="visitDist">70<span class="sssTxt">M</span></div>
+					<div class="nextPoint">99</div>									
+				</div>
+			</li>
+			<!--총 비행 시간-->
+			<li class="time">180 <span class="sssTxt">Min</span></li>
+			<!-- 총 이동 거리-->
+			<li class="distance">1210 <span class="sssTxt">M</span></li>
+		</ul>
+	</div>
+
+	<div class="cameraView">
+		<button type="button" class="btnViewCamera" ng-click="viewCameraModal()">Camera</button>
+	</div>			
+</div>
+<!--FOOTER CONTENT AREA E -->
+
+
+
+<!--Flight Destination layer Popup start -->
+<div class="controlLayer" ng-show="flightOpenLayer">
+<div class="dimed"></div>
+<div class="settingLeyer" >
+    <div class="popTop">Flight Destination 
+    	<div class="topIco"><img src="images/ico/icoFlightTop.png"></div>
+    	<div class="topIco2"><img src="images/ico/icoDroneWing.png"></div>
+        <button type="button" class="closeTypeA" ng-click="flightOpen()">
+            <span class="blind" >닫기</span>
+        </button>
+    </div>
+    <dl>
+        <dd>
+			<table>
+				<colgroup>
+					<col width="90px">
+					<col width="*">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>Latitude</th>
+						<td><input type="text" placeholder="&#176;"></td>
+					</tr>
+					<tr>
+						<th>Longitude</th>
+						<td><input type="text" placeholder="&#176;"></td>
+					</tr>
+					<tr>
+						<th>Altitude</th>
+						<td><input type="text" placeholder="m"></td>
+					</tr>
+				</tbody>
+			</table>
+        </dd>
+        <dd class="buttonArea">
+            <button type="button" class="ok">Ok</button>
+            <button type="button" ng-click="flightOpen()">Cancel</button>
+        </dd>
+    </dl>
+</div>
+</div>
+<!-- Flight Destination  layer END-->
+
+<!--Take Off Altitude layer Popup start -->
+<div class="controlLayer" ng-show="takeOpenLayer">
+<div class="dimed"></div>
+<div class="settingLeyer">
+    <div class="popTop">Take Off Altitude
+    	<div class="topIco"><img src="images/ico/icoTakeTop.png"></div>
+    	<div class="topIco2"><img src="images/ico/icoDroneWing.png"></div>
+        <button type="button" class="closeTypeA" ng-click="takeOpen()" >
+            <span class="blind">닫기</span>
+        </button>
+    </div>
+    <dl>
+        <dd>
+			<table>
+				<colgroup>
+					<col width="90px">
+					<col width="*">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>Altitude</th>
+						<td><input type="text" placeholder="m"></td>
+					</tr>
+				</tbody>
+			</table>
+        </dd>
+        <dd class="buttonArea">
+            <button type="button" class="ok">Ok</button>
+            <button type="button" ng-click="takeOpen()">Cancel</button>
+        </dd>
+    </dl>
+</div>
+</div>
+<!-- Take Off Altitude layer END-->
+
+
+
+<!-- 아래 부분은 서버 기능 테스트 및 디버그 용도입니다. 
+     혹시 문제가 있으시다면 연락주세요.
+	 홍사용 선임 / 010-6215-1869 / sayong.hong@hanwha.com
+-->
+<div class="debug_protocol_panel">
+	
+	<h3> Protocol Debug Panel </h3>
+
+	<div class="debug_protocol_div_30">
+		<h4>Command</h4>
+		<div class="debug_protocol_div_10">
+			<label class="debug_protocol_label">Lat</label>
+			<input type="text" class="debug_protocol_input_text_150" />
+			<label class="debug_protocol_label">Lon</label>
+			<input type="text" class="debug_protocol_input_text_150" />
+			<label class="debug_protocol_label">Alt</label>
+			<input type="text" class="debug_protocol_input_text_50" />
+			<button type="button" class="debug_protocol_button_100" ng-click="doTakeoff()">Take-Off</button>
+			<button type="button" class="debug_protocol_button_100" ng-click="doLand()">Land</button>
+			<button type="button" class="debug_protocol_button_100" ng-click="">Hover</button>
+			<button type="button" class="debug_protocol_button_100" ng-click="goto()">Fly To</button>
+			<button type="button" class="debug_protocol_button_100" ng-click="">R.T.H</button>
+		</div>
+	</div>
+	
+	<div class="debug_protocol_div_30">
+		<h4>Parameter</h4>
+		<div class="debug_protocol_div_10">
+			<button type="button" class="debug_protocol_button_200" ng-click="publishRequestGetParamList()">Request Get Param List</button>
+			<label class="debug_protocol_label">param_id</label>
+			<input type="text" class="debug_protocol_input_text_150" ng-model="paramVal.requestParamID" />
+			<label class="debug_protocol_label">param_value</label>
+			<input type="text" class="debug_protocol_input_text_50" ng-model="paramVal.requestParamValue" />
+			<button type="button" class="debug_protocol_button_200" ng-click="publishRequestSetParamList()">Request Set Param List</button>
+			<button type="button" class="debug_protocol_button_200" ng-click="publishRequestModifyParam()">Request Modify Param</button>
+		</div>
+	</div>
+
+	<div class="debug_protocol_div_30">
+		<h4>Waypoints</h4>
+		<div class="debug_protocol_div_10">
+			<button type="button" class="debug_protocol_button_200" ng-click="downLoadMission()">Waypoints Download</button>
+			<button type="button" class="debug_protocol_button_200" ng-click="upLoadMission()">Waypoints Upload</button>
+			<button type="button" class="debug_protocol_button_200" ng-click="startMission()">Waypoints Start</button>
+		</div>
+	</div>
+	
+	<button type="button" class="debug_protocol_close_button" ng-click="closeDebugProtocolPanel()">CLOSE</button>
+</div>
+

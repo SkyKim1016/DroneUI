@@ -1,0 +1,41 @@
+// git clone ssh://jh85.choi@ctf1.stw.net:29418/tgos_client_p_let-drone-d9 && cd "tgos_client_p_let-drone-d9" && git config user.name "최정훈"
+
+// git branch  : 현재 브런치
+
+// git branch -r : 리모트 브랜치 확인 
+
+// git checkout  
+
+// git checkout branch : 브랜치 이동 
+
+// git states : 깃 상태 확인 (현재 브랜치 경로확인 - 변경사항 확인 )
+
+// git pull origin develop : 서버에서 develop 를 가져온다 
+
+// git submoudle init : 이니셜 초기화 
+
+// git submoudle update -- recursive : 모듈을 가져오기 ( 10번 가져오기)
+
+// git branch skyKim
+
+// grunt server : 서버 가동
+
+// git checkout skyKim 
+
+// git  commit -a : "코멘트" (외주 개발 등급 산정주의)
+
+// (X) git add * : * 절대 금지 (모든 경로 기재)
+
+// git reset
+
+// git submodule update (디렉토리 애드 커밋 하면 안됨) -- 서브모듈은 애드커밋이 아니라 서브모듈 업데이트로 실행한다. 
+
+// git merge Skykim : 
+
+// git push origin skyKim -- 원격지로 업데이트
+
+// git pull origin develop -- 원격지에서 체크아웃  
+
+// git submodule init -- 알맹이 업데이트 
+
+// git submodule update --init --recursive

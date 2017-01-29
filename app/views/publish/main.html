@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<title>HTML List</title>
+
+	   
+    <!--script src="kind/base_components/angular-chart.js/angular-chart.js"></script-->
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+    <link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+
+
+</head>
+
+	<body >
+			
+
+				<!--HEADER CONTENT AREA S -->
+				<header>
+					<div class="btnGnb">
+						<button type="button"><img src="images/btn/btnGnb.gif" alt="메뉴보기"></button>
+					</div>
+					<div class="logo"></div>
+					<ul class="baseInfo">
+						<!-- 드론 이름 -->
+						<li class="dName"><span>Drone01</span></li>
+
+						<!-- 드론 연결 상태 class == { connect, disConnect, none } -->
+						<li class="none">Connect</li>
+						
+						<!-- GPS 상태 class = {Good = gpsGood , Normal = gpsNormal , Bad = gpsBad , none = GpsNone} -->
+						<li class="gpsBad">Good<span>(10)</span> </li>
+						
+						<!-- 무선 Good Very = ntVeryGood, Good = ntGood, Normal = ntNormal, Bad =  ntBad , None = ntNone -->
+						<li class="ntVeryGood">Nomal</li>
+
+						<!-- 밧데리 class = btBad -->
+						<li class="btBad">83% <span>15v</span></li>
+
+						<!-- 풍향  N = wdN , NE = wdNe , E  wdE , SE = wdSe , S = weS ,  SW = weSw , W = wdW , NW = wdNw-->
+						<li class="wdNw"><span></span> NW23 m/s </li>
+
+						<!--온도 습도-->
+						<li class="temperature">23&#176; <span>46%</span></li>
+
+						<!-- 날씨  맑음 sunny, 안개  haze, 구름 조금 sCloudy, 구름 많이 lCloudy, 비 rainy, 눈 snowy, 번개 thunder -->
+						<li class="rainy">Sunny</li>
+					</ul>
+
+					<div class="message"> 
+						<div class="num">12</div>
+					</div>
+
+					<div class="help"><button type="button"><img src="images/btn/btnHelp.gif" alt="HELP"></button></div>
+
+					<div class="emercency"><button type="button"><img src="images/btn/btnRmergncy.gif" alt="Emercency"></button></div>
+
+				</header>
+				<!--HEADER CONTENT AREA E -->
+
+					
+				<content>
+					
+					<div class="listMenu">
+						<button type="button" class="droneList"><img src="images/btn/btnList.gif" alt="리스트"></button>
+						<ul class="listDepth01">
+							<li class="listObject">
+								<button type="button"><img src="images/btn/btnlistObject.gif" alt=""></button>
+							</li>
+							<li class="listDrone"><button type="button"><img src="images/btn/btnlistDrone.gif" alt=""></button></li>
+							<li class="listCamera"><button type="button"><img src="images/btn/btnlistCamera.gif" alt=""></button></li>
+							<li class="listSensor"><button type="button"><img src="images/btn/btnlistSensor.gif" alt=""></button></li>
+						</ul>	
+					</div>
+
+
+					<div class="cameraArea"></div>
+					<!-- 지도 영역 -->
+					<div class="mapArea">
+						<div id="map" ng-controller= "mapCtrl" class="map" ng-init='init()'><div id="popup"></div>							
+					</div>
+				</content>
+
+
+				<!-- FOOTER CONTENT AREA S -->
+				<div id="footer">
+
+					<!--드론 컨트롤 -->
+					<div class="droneControl"><button type="button" class="droneList"><img src="images/btn/btnControl.gif" alt="드론 컨트롤러"></button></div>
+					
+					<!-- vertical speed, ground speed alttude 고도  -->
+					<div class="guageArea">
+						<ul>
+							<li><span class="home">Return<br>to Home</span></li>
+							<li><span class="auto">Auto</span></li>
+							<li><img src="images/temp/tempVs.png" class="mgT07"></li>
+							<li><img src="images/temp/tempGs.png" class="mgT07"></li>
+							<li><img src="images/temp/tempAlt.png" class="mgT07"></li>
+						</ul>
+					</div>
+					
+					<!-- 평형계 -->
+					<div class="inclinometer">
+
+						<div class="txtC mgT04">
+							<img src="images//temp/tempInclinometer.png" alt="평형계">
+						</div>
+						
+
+
+					</div>
+
+					<div class="distanceInfo">	
+						<ul>
+							<!--다음 지점까지 거리 -->
+							<li class="moveTarget">
+								<div class="valueAarea">
+									<div class="startP">H</div>
+									<div class="passDist">38<span class="sssTxt">M</span></div>
+									<div class="visitDist">70<span class="sssTxt">M</span></div>
+									<div class="nextPoint">99</div>									
+								</div>
+							</li>
+							<!--총 비행 시간-->
+							<li class="time">180 <span class="sssTxt">Min</span></li>
+							<!-- 총 이동 거리-->
+							<li class="distance">1210 <span class="sssTxt">M</span></li>
+						</ul>
+					</div>
+
+					<div class="cameraView"><button type="button" class="droneList"><img src="images//btn/btnCamera.gif" alt="카메라 보기"></button></div>			
+				</div>
+				<!--FOOTER CONTENT AREA E -->
+
+			<div class="dimed"></div>
+			<nav>
+				<img src="images/common/gnbMain.png" alt="GNB" usemap="#gnb">
+				<map name="gnb">
+				<area shape="poly" alt="" title="" coords="189,2,273,1,320,79,277,156,182,156,143,78" href="" target="" />
+				<area shape="poly" alt="" title="" coords="331,248,413,243,457,321,417,397,326,398,286,329" href="" target="" />
+				<area shape="poly" alt="" title="" coords="191,331,271,329,320,405,275,476,189,476,144,410" href="" target="" />
+				<area shape="poly" alt="" title="" coords="49,247,130,247,173,324,135,401,43,398,0,325" href="" target="" />
+				<area shape="poly" alt="" title="" coords="48,85,128,84,174,161,132,235,44,234,-1,162" href="" target="" />
+				</map>
+			</nav>
+			
+
+	</body>
+
+
+</html>

@@ -1,0 +1,211 @@
+<content ng-controller="streamingCtrl">
+
+
+	<div class="cameraArea">
+		<div class="mainViewArea">
+			<ul class="mainCamera">
+				<li class="leftInfo">
+					<camera-gauge-side ng-model="rollGaugeData" guage-side="left"></camera-gauge-side>
+
+
+					<!--
+                    <img src="images/temp/temLeftImg.jpg" alt="">
+-->
+				</li>
+				<li class="viewArea">
+					<div class="topInfo">
+						<camera-gauge-top ng-model="directionGaugeData"></camera-gauge-top>
+						<!-- <button id="btnStart" class="btn btn-default">Start/stop animation</button>
+
+                        <img src="images/temp/temTopimg.jpg" alt="">   -->
+					</div>
+
+
+					<div class="mainView" id="mainView">
+						<!-- Switch -->
+						<!--                        <img src="images/temp/temView03.jpg" alt="">-->
+						<tgos-video winid='XnsSdkWindow1' kindplayer='playerdata[0]'></tgos-video>
+					</div>
+
+
+				</li>
+				<li class="rightInfo">
+
+					<camera-gauge-side ng-model="pitchGaugeData" guage-side="right"></camera-gauge-side>
+
+					<!--
+                    <img src="images/temp/temRightImg.jpg" alt=""> -->
+				</li>
+			</ul>
+
+		</div>
+
+
+		<div class="controlArea">
+			<!-- minimap area -->
+			<div class="miniMap">
+				<dl class="minView" style="z-index: 9999;" id="smallView">
+					<dt>Camera_1 Video</dt>
+					<dd ng-dblclick="switchView('Camera_1')">
+
+						<!-- Switch -->
+						<!--                            <img src="images/temp/temMinView.jpg" alt="">-->
+						<tgos-video winid='XnsSdkWindow2' kindplayer='playerdata[1]'></tgos-video>
+					</dd>
+				</dl>
+
+				<div id="map" class="map" style="height: 100%;" ng-dblclick="goToMain()" ng-controller="mapCtrl" ng-init='init()'>
+					<div id="popup"></div>
+				</div>
+
+				<!--  <img ng-dblclick="goToMain()" src="images/temp/temMinMap.jpg" alt="">  -->
+			</div>
+
+
+
+			<!-- video control area -->
+			<div class="ptzControl">
+
+				<div>
+					<!-- -->
+					<div class="direction">
+						<button type="button" title="STOP" class="dirstop"><span class="blind">STOP</span></button>
+
+						<button type="button" title="TOP" class="dirtop"><span class="blind">TOP</span></button>						
+						<button type="button" title="RIGHT" class="dirright"><span class="blind">RIGHT</span></button>
+						<button type="button" title="BOTTOM" class="dirbottom"><span class="blind">BOTTOM</span></button>
+						<button type="button" title="LEFT" class="dirLeft"><span class="blind">LEFT</span></button>
+
+						<button type="button" title="TOP" class="dirtopLeft"><span class="blind">TOP</span></button>						
+						<button type="button" title="RIGHT" class="dirtopRight"><span class="blind">RIGHT</span></button>
+						<button type="button" title="BOTTOM" class="dirbottomLeft"><span class="blind">BOTTOM</span></button>
+						<button type="button" title="LEFT" class="dirbottomRight"><span class="blind">LEFT</span></button>
+					</div>
+
+
+					<div class="controlTypeA">
+						<dl  ng-model="dayMight()">
+							<dt>Day / Night</dt>
+							<dd><button type="button" title="Day" class="day on"><span class="blind">Day</span></button> <button type="button" title="Night" class="night"><span class="blind">Night</span></button></dd>				
+						</dl>
+						<dl>
+							<dt>Zoom</dt>
+							<dd><button type="button" title="Zoom In" class="plus"><span class="blind">Zoom In</span></button> <button type="button" title="Zoom Out" class="minus"><span class="blind">Zoom Out</span></button></dd>
+						</dl>
+						<dl>
+							<dt>Focus</dt>
+							<dd><button type="button" title="Focus In" class="focusIn"><span class="blind">Focus In</span></button> <button type="button" title="Focus Out" class="focusOut"><span class="blind">Focus Out</span></button></dd>
+						</dl>								
+					</div>
+
+					 <div  class="controlTypeB"> 
+					 	<dl>
+					 		<dt>Speed</dt>
+							<dd class="speedSlide"><div id="blue" ui-slider="colorpicker.options" data-min="0" data-max="80" ng-model="colorpicker.blue2"></div></dd>
+							<dd class="speedValue"><input type="text" disabled="disabled" ng-model="colorpicker.blue2" /></dd>
+					 	</dl> 
+               		 </div>
+
+               		
+
+               		 <div class="controlInfo"> 
+               		 	<dl>
+               		 		<dt class="icoPan">Pan</dt>
+               		 		<dd>22.3&#176;</dd>
+               		 	</dl> 
+               		 	<dl>
+               		 		<dt class="icoTilt">Tilt</dt>
+               		 		<dd>22.3&#176;</dd>
+               		 	</dl> 
+               		 	<dl>
+               		 		<dt class="icoZoom">Zoom</dt>
+               		 		<dd>3X</dd>
+               		 	</dl> 
+               		 	<dl>
+               		 		<dt class="icofocus">focus</dt>
+               		 		<dd>56</dd>
+               		 	</dl>               		 	
+               		 
+               		 </div>
+
+                </div>
+             </div>			          
+		</div>
+		<tgos-video-sdk></tgos-video-sdk>
+	</div>
+
+        
+    <!--
+	<script>
+                                var app = angular.module('sliderDemoApp', ['ui.slider']);
+                                app.factory('colorpicker', function() {
+                                    function hexFromRGB(r, g, b) {
+                                        var hex = [r.toString(16), g.toString(16), b.toString(16)];
+                                        angular.forEach(hex, function(value, key) {
+                                            if (value.length === 1)
+                                                hex[key] = "0" + value;
+                                        });
+                                        return hex.join('').toUpperCase();
+                                    }
+                                    return {
+                                        refreshSwatch: function(r, g, b) {
+                                            var color = '#' + hexFromRGB(r, g, b);
+                                            angular.element('#swatch').css('background-color', color);
+                                        }
+                                    };
+                                });
+
+                                /*
+                                 // To set an option for all sliders
+                                 app.factory('uiSliderConfig', function ($log) {
+                                 return {
+                                 start: function (event, ui) { $log.info('Event: Slider start - set with uiSliderConfig', event); },
+                                 stop: function (event, ui) { $log.info('Event: Slider stop - set with uiSliderCOnfig', event); },
+                                 };
+                                 });
+                                 */
+
+                                app.controller('sliderDemoCtrl', function($scope, $log, colorpicker) {
+
+                                    function refreshSwatch(ev, ui) {
+                                        var red = $scope.colorpicker.red,
+                                                green = $scope.colorpicker.green,
+                                                blue = $scope.colorpicker.blue;
+                                        colorpicker.refreshSwatch(red, green, blue);
+                                    }
+
+                                    // Slider options with event handlers
+                                    $scope.slider = {
+                                        'options': {
+                                            start: function(event, ui) {
+                                                $log.info('Event: Slider start - set with slider options', event);
+                                            },
+                                            stop: function(event, ui) {
+                                                $log.info('Event: Slider stop - set with slider options', event);
+                                            }
+                                        }
+                                    };
+
+                                    $scope.colorpicker = {
+                                        red: 255,
+                                        green: 140,
+                                        blue: 60,
+                                        options: {
+                                            orientation: 'horizontal',
+                                            min: 0,
+                                            max: 255,
+                                            range: 'min',
+                                            change: refreshSwatch,
+                                            slide: refreshSwatch
+                                        }
+                                    };
+                                });
+        </script>
+          <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+          <script src="./kind/base_components/ui-slider-master/src/index.js"></script>
+          <script src="./kind/base_components/ui-slider-master/src/slider.js"></script>
+
+-->
+
+
+</content>

@@ -1,0 +1,268 @@
+
+<content>
+
+<div id="mapSettingArea">
+	<div class="setUnitArea" ng-init="objectClassInit()">
+		<ul class="editUnit">
+			<li ng-class="SELECT_BUTTON == false ? '' : 'off'"  ><button type="button" class="ectselect" ng-disabled="SELECT_BUTTON" ng-click="dragSelect()">Select <br/><span>{{DRAGABLE_STATUS}}</span></button></li>			
+			<li  ng-class="EDIT_BUTTON == false ? '' : 'off'">
+				<button type="button" class="edit" ng-disabled="EDIT_BUTTON" ng-show="!editSavedFeature" ng-click="editFeature()">Edit</button>
+				<button type="button" class="edit" ng-disabled="CANCLE_BUTTON" ng-show="editSavedFeature" ng-click="cancleEditFeature()">Cancel</button>
+			</li>
+			<li  ng-class="DELETE_BUTTON == false ? '' : 'off'"><button type="button" class="delete" ng-disabled="DELETE_BUTTON" ng-click="deleteFeature()">Delete</button></li>
+		</ul>		
+		<ul class="figureunit" >
+			<li ng-class="AIRZONE_BUTTON == false ? '' : 'off'"><button type="button" class="airZone" ng-disabled="AIRZONE_BUTTON" ng-click="makeObjectLayer('airzone')">Air Zone</button>
+				<dl class="unitList">
+					<dd><button type="button" class="polygon" title="Polygon" ng-click="drawObjectOnLayer('Polygon')">Polygon</button></dd>
+					<dd><button type="button" class="circle" title="Circle" ng-click="drawObjectOnLayer('Circle')">Circle</button></dd>					
+				</dl>
+			</li>		
+			<li ng-class="OBSTACLE_BUTTON == false ? '' : 'off'"><button type="button" class="obstacle" ng-disabled="OBSTACLE_BUTTON" ng-click="makeObjectLayer('obstacle')">Obstacle</button>
+				<dl class="unitList">
+					<dd><button type="button" class="polygon" title="Polygon" ng-click="drawObjectOnLayer('Polygon')">Polygon</button></dd>
+					<dd><button type="button" class="circle" title="Circle" ng-click="drawObjectOnLayer('Circle')">Circle</button></dd>
+					<dd><button type="button" class="point" title="Point" ng-click="drawObjectOnLayer('Point')">Point</button></dd>
+				</dl>
+			</li>			
+		</ul>
+		<ul class="ectunit">
+			<li ng-class="CAMERA_BUTTON == false ? '' : 'off'"><button type="button" class="camera" ng-disabled="CAMERA_BUTTON" ng-click="makeDeviceLayer('camera')">Camera</button></li>
+			<li ng-class="SENSOR_BUTTON == false ? '' : 'off'"><button type="button" class="sensor" ng-disabled="SENSOR_BUTTON" ng-click="makeDeviceLayer('sensor')">Sensor</button></li>
+			<!--li><button type="button" class="btnGeo" ng-click="makeObjectLayer('GeoFence')" ng-disabled="dragSelectEnable">Geo-Fence</button></li-->
+		</ul>
+	</div>
+	
+	<div class="zoneArea">
+		<ul>
+			<li class="" ng-click="viewObjects('airzone')">
+				<input type="checkbox" ng-model="airzoneOn" class="type02" id="airzone">
+				<label for="zone" >
+					<span class="zone">Zone</span>
+				</label>
+			</li>
+			<li ng-click="viewObjects('obstacle')">
+				<input type="checkbox" ng-model="obstacleOn" class="type02" id="obstacle">
+				<label for="obstacle" >
+					<span class="obtacle" >Obstacle</span>
+				</label>
+			</li>
+			<li ng-click="viewObjects('fly')">
+				<input type="checkbox" ng-model="noFlyZoneOn" class="type02" id="fly">
+				<label for="fly" >
+					<span class="fly" >No Fly Zone</span>
+				</label>
+			</li>
+			<li ng-click="viewObjects('geo')">
+				<input type="checkbox" ng-model="geoFenceOn" class="type02" id="geo">
+				<label for="geo" >
+					<span class="geo" >Geo-Fence</span>
+				</label>
+			</li>
+			<li ng-click="viewObjects('camera')">
+				<input type="checkbox" ng-model="cameraOn" class="type02" id="camera">
+				<label for="camera" >
+					<span class="camera" >Camera</span>
+				</label>
+			</li>
+			<li ng-click="viewObjects('sensor')">
+				<input type="checkbox" ng-model="sensorOn" class="type02" id="sensor">
+				<label for="sensor" >
+					<span class="sensor" >Sensor</span>
+				</label>
+			</li>			
+		</ul>
+
+		<button type="text" class="mgT06" ng-click="openMapSettingModal()"><img src="images/btn/btnLnitialization.png"></button>
+		
+	</div>
+
+
+	<div ng-controller="mapCtrl">
+	    <div id="map" class="map" ng-init='init()'>
+	        <div id="popup"></div>
+	    </div>
+	</div>
+
+
+	
+</div>
+
+
+</content>
+
+
+
+
+
+<!-- MAP SETTING layer start-->
+<div id="mapSetLayer" ng-show="mapSettingModalOpen">
+	<div class="dimed"></div>
+
+	<div class="mapSLeyer" >
+		<div class="mapSetTop">Map Setting  
+            <button type="button" class="closeTypeA" ng-click="closeMapSettingModal()">
+                <span class=blind>닫기</span>
+            </button>
+        </div>
+		<dl>				
+			<dd>
+				<table>
+					<colgroup>
+						<col/>
+						<col/>
+					</colgroup>
+					<thead>
+						<tr>
+							<th>좌표계</th>
+							<th>
+								
+								<select ng-model="locationType">
+					   				<option value="latlong">GPS</option>
+					   				<option value="utm">UTM</option>
+					   				<option value="mgrs">MGRS</option>
+				   
+								</select>				
+							</th>
+						</tr>
+					</thead>
+				</table>					
+			</dd>
+			<dd>
+				<table>
+					<colgroup>
+						<col width="107px" />
+						<col width="107px"/>
+						<col />
+					</colgroup>
+					<thead>
+						<tr>
+							<th>Latitude</th>
+							<th>Longitude</th>
+							<th>Zoom</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+							<input type="number" class="mapText" ng-model="mapSetting_lat"></td>
+							<td><input type="number" class="mapText" ng-model="mapSetting_lng"></td>
+							<td><input type="number" class="mapText2" ng-model="mapSetting_zoomLevel"></td>
+						</tr>
+					</tbody>
+				</table>					
+			</dd>
+			<dd>
+				<div class="zoomTitle">Zoom Limit</div>
+				<div class="zoomLimit">
+				<select name="zoom Limit A" ng-model="mapSetting_zoomMin" ng-change="minZoomChange()">
+				    <option  ng-repeat="zoom in mapSetting_zoomRange track by $index">{{zoom}}</option>
+				   
+				</select>
+				<select name="zoom Limit B" ng-model="mapSetting_zoomMax">
+				    <option  ng-repeat="zoom in mapSetting_zoomRange2 track by $index" >{{zoom}}</option>					   
+				</select>
+
+				</div>					
+			</dd>
+			<dd class="buttonArea">
+				<button type="button" class="ok" ng-click="setMap()">Save</button>
+				<button type="button" ng-click="closeMapSettingModal()">Cancel</button>
+			</dd>
+
+		</dl>
+	</div>
+</div>
+<!-- MAP SETTING layer end-->
+
+<!-- Object Property layer start-->
+
+<div id="propertyLayer" ng-show="showObjProperty">
+	<div class="dimed"></div>
+
+	<div class="obectSLeyer" >
+		<div class="ObectTop">Object Property  
+            <button type="button" class="closeTypeA" ng-click="cancleObjPropertyModal()">
+                <span class=blind>닫기</span>
+            </button>
+        </div>
+		<dl>
+			<dd ng-show="objPropertyList.name">
+				<span class="tit">Name</span> 
+				<input type="text" class="porType01" ng-model="objProperty.name"/>
+			</dd>
+			<dd>
+				<span class="tit">Object </span>
+				<select class="object" ng-model="objProperty.obj" ng-change="selectObjType()" ng-options="list.value as list.name for list in selectList" disabled="true">
+			   
+				</select>
+			</dd>
+			<dd ng-show="objPropertyList.device">
+				<span class="tit">Device </span>
+				<select class="object" ng-model="objProperty.selectedDevice" ng-change="deviceSelected()" ng-options="device for device in deviceNameList">
+				</select>
+			</dd>
+			
+			<dd>
+				<span class="tit">Property</span>
+				<ul>
+					<li ng-show="objPropertyList.location"> 
+						<div ng-if="locationInfoDisplay" class="posi">
+							Latitude <input type="number" ng-model="objProperty.centerPoint[0]">
+							<br />
+							Longitude <input type="number" ng-model="objProperty.centerPoint[1]">
+						</div>
+
+						<div ng-if="!locationInfoDisplay" class="posi" ng-click="openLocationInfo()">
+							Latitude ({{objProperty.centerPoint[0]}})
+							<br />
+							Longitude ({{objProperty.centerPoint[1]}})
+						</div>
+
+						<!-- 하나일때는 class="oneline" 두개의 정보일때는 class="twoline" -->
+						<div class="posiInfo twoline"  ng-show="locationInfo">
+							<table>
+								<colgroup>
+									<col width="30px">
+									<col width="*">
+								</colgroup>						
+								<tbody>
+									<tr ng-repeat="loc in objProperty.locList track by $index" ng-show="!$last">
+										<th>{{$index + 1}}</th>
+										<td>
+											<input type="number" ng-model="loc[0]"> 
+											<br /> 
+											<input type="number" ng-model="loc[1]">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</li>
+					<li ng-show="objPropertyList.radius"> 
+						<span>Radius</span> 
+						<input type="number" class="porType02" ng-model="objProperty.groundRadius"/>
+					</li>
+					<li ng-show="objPropertyList.altitude1 || objPropertyList.altitude2"> 
+						<span ng-show="objPropertyList.altitude1">Altitude 1</span> 
+						<input ng-show="objPropertyList.altitude1" type="number" class="porType03" ng-model="objProperty.alt1" /> 
+						<span ng-show="objPropertyList.altitude2">Altitude 2 </span>
+						<input ng-show="objPropertyList.altitude2" type="number" class="porType03" ng-model="objProperty.alt2" />
+					</li>
+					<li ng-show="objPropertyList.angle"> 
+						<span>Angle</span> 
+						<input type="number" class="porType02"  ng-model="objProperty.angle"/> 
+					</li>
+				</ul>				
+			</dd>
+			<dd class="buttonArea">
+				<button type="button" class="ok" ng-click="saveFeature()">Save</button>
+				<button type="button" ng-click="cancleObjPropertyModal()">Cancel</button>
+			</dd>
+
+		</dl>
+	</div>
+
+</div>
+
+<!-- Obect Property layer end-->

@@ -1,0 +1,73 @@
+<div id="mapMenuSelect" ng-controller="mapMenuCtrl" style="width:30%;"  ng-init="mapMenu_onload()">
+    <select ng-model="mapMenu" ng-change="selectMenu()" class="form-control" >
+        <option value="monitorView">Monitor</option>
+        <option value="wpPathView">WP Path</option>
+    </select>
+</div>
+<div id="monitorMenu" class="btn-group btn-group-sm" role="group" aria-label="Draw">
+    
+<!--    <button class="btn btn-default" type="button" ng-click="subscribe(topic)">Subscribe</button> -->
+    <div id="mapManuplateMenu" >
+    <button id="pan" type="button" class="btn btn-primary" ng-click='moveMapCenter()'>Pan</button>
+    <button id="createWapointPath" type="button" class="btn btn-primary" ng-click='makePathLayer()'>Path</button>
+    <button id="createObjectLayer" type="button" class="btn btn-primary" ng-click='makeObjectLayer()'>Air Zone</button>
+    <button id="createDeviceLayer" type="button" class="btn btn-primary" ng-click='makeDeviceLayer()'>Device</button>
+    <button id="select" type="button" class="btn btn-default" ng-click='select()'>Select</button>
+    <button id="dragselect" type="button" class="btn btn-default" ng-click='dragSelect()'>DragSel</button>    
+    <button id="point" type="button" class="btn btn-success" ng-click='addDeviceOnLayer()'>Point</button>
+    <button id="line" type="button" class="btn btn-success" ng-click='addWaypointOnLayer()'>Line</button>
+    <button id="circ" type="button" class="btn btn-success" ng-click='addCircleOnLayer()'>Circle</button>
+    <button id="polygon" type="button" class="btn btn-success" ng-click='addPolygonOnLayer()'>Polygon</button>
+    <button id="squaer" type="button" class="btn btn-success"ng-click='addSquareOnLayer()'>Square</button>
+    <button id="box" type="button" class="btn btn-success" ng-click='addBoxOnLayer()'>Box</button>
+    <button id="modify" type="button" class="btn btn-danger" ng-click='modifyFeature()'>Modify</button>
+    <button id="move" type="button" class="btn btn-success" ng-click='getObject()'>LoadObject</button>
+    <button id="delete" type="button" class="btn btn-danger" ng-click='deleteFeature()'>Delete</button>
+    <button id="deleteAll" type="button" class="btn btn-danger" ng-click='deleteAllFeature()'>Delete All</button>
+    <button id="save" type="button" class="btn btn-success" ng-click='saveFeature()'>Save</button>
+
+    <button id="beforeOpti" type="button" class="btn btn-success" ng-click='getCoords()'>Survey</button>
+    <button id="mapSetting" type="button" class="btn btn-success" ng-click='setMap()'>MapSetting</button>
+
+    <button id="miniMapinit" type="button" class="btn btn-success" ng-click='setMiniMapInitialize()'>miniMapInit</button>            
+    <button id="miniMapinit" type="button" class="btn btn-success" ng-click='returnHome()'>returnHome</button>
+    
+    </div></div>
+<div id="wpPathMenu" ng-controller="mapMenuCtrl">
+  <div id="viewMenu" class="btn-group btn-group-sm">
+      <button id="new" type="button" class="btn btn-default" ng-click='newWpPath()'>NEW</button>
+      <button id="new" type="button" class="btn btn-default" ng-click='loadPathList()'>LOAD</button>
+      <button id="new" type="button" class="btn btn-default" ng-click='loadPathById()'>LOADBYID</button>
+      <button id="new" type="button" class="btn btn-default" ng-click='deletePath()'>DELETE</button>
+      <button id="new" type="button" class="btn btn-default" ng-click='changeMode()'>EDIT MODE</button>
+  </div>  
+  <div id="editMenu" class="btn-group btn-group-sm">
+      <button id="new" type="button" class="btn btn-default" ng-click='clearPath()'>CLEAR</button>
+      <button id="new" type="button" class="btn btn-default" ng-click='addWaypoint()'>ADD WP</button>
+      <button id="new" type="button" class="btn btn-default" ng-click='inputWaypoint()'>DELETE WP</button>
+      <button id="new" type="button" class="btn btn-default" ng-click='inputOrders()'>CHANGE ORDER</button>
+      <button id="new" type="button" class="btn btn-default" ng-click='savePath()'>SAVE</button>
+      <button id="new" type="button" class="btn btn-default" ng-click='saveAsScenario()'>SAVE AS SCENARIO</button>
+      <button id="new" type="button" class="btn btn-default" ng-click='selectMode()'>SELECT</button>      
+      <button id="new" type="button" class="btn btn-default" ng-click='changeMode()'>VIEW MODE</button>      
+  </div>
+  <div id="inputPathName">
+       <input type="text" id="pathName" style="padding:2px;">
+       <button type="button" class="btn btn-info" ng-click="setPathName()">입력</button>
+   </div> 
+     <div id="inputPathId">
+       <input type="number" id="pathId" style="padding:2px;">
+       <button type="button" class="btn btn-info" ng-click="setPathId()">입력</button>
+   </div>
+   <div id="inputOrder">
+       <input type="number" id="beforeOrder" style="padding:2px;">
+       <button type="button" class="btn btn-info" ng-click="changeOrder('up')">UP</button>
+       <button type="button" class="btn btn-info" ng-click="changeOrder('down')">DOWN</button>
+   </div>
+    <div id="inputWpOrder">
+       <input type="number" id="wpOrder" style="padding:2px;">
+       <button type="button" class="btn btn-info" ng-click="deleteWaypoint()">삭제</button>
+   </div>     
+</div>
+
+<div id="map" class="map" ng-init='init()'><div id="popup"></div></div>

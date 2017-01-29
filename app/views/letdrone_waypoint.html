@@ -1,0 +1,390 @@
+
+<content>
+
+<div id="wayPointArea">
+    <div class="modeArea">
+        <ul>
+            <li ng-class="{on:modeState.viewMode, off:!modeState.viewMode}">
+                <button type="button" id="NEW" class="new" ng-click="OpenNewPathModal()" ng-disabled="!modeState.viewMode">NEW</button>
+            </li>
+            <li ng-class="{on:modeState.viewMode, off:!modeState.viewMode}"><button type="button" id="OPEN" class="open" ng-click="OpenExistingPathModal()" ng-disabled="!modeState.viewMode">OPEN</button></li>
+            <li ng-class="{on:ExistingPathOpened, off:!ExistingPathOpened}" class="" id="viewMode" ng-show="modeState.viewMode">
+                <button type="button" class="edit" ng-disabled="!ExistingPathOpened" ng-click="switchMode('edit')">EDIT</button>
+            </li>
+            <li class="on" id="editMode" ng-show="!modeState.viewMode">
+                <button type="button" class="cancel" ng-click="CancelEditMode()">CANCEL</button>    
+            </li>
+
+            <li ng-class="SaveOnOff() == true? 'on' : 'off'">
+            <!-- <li ng-class="{on:!modeState.viewMode, on:SaveOnOff, off:ExistingPathOpened, off:modeState.viewMode, off:TotalWPs == 0}"> -->
+                <button type="button" id="SAVE" class="save" ng-disabled="modeState.viewMode||ExistingPathOpened||TotalWPs == 0" ng-click="SaveNewPath()">SAVE</button>
+            </li>
+            <li ng-class="SaveAsOnOff() == true? 'on' : 'off'">
+            <!-- <li ng-class="{on:!modeState.viewMode, off:modeState.viewMode, off:!ExistingPathOpened, off:TotalWPs == 0}"> -->
+            	<button type="button" id="SAVEAS" class="saveas" ng-click="OpenSaveAsPathModal()" ng-disabled="!ExistingPathOpened||TotalWPs == 0">SAVE AS</button>
+        	</li>
+        </ul>
+    </div>
+    <div class="Mode">{{modeState.modeText}}</div>
+    <div class="optimization"><button type="button">Optimization</button></div>
+    
+
+    <div class="editArea">
+        <ul>
+
+            <li ng-class="SelectOnOff() == true? 'on' : 'off'">
+            <!-- <li ng-class="{on:TotalWPs, off:TotalWPs == 0, off:modeState.viewMode}"> -->
+                <button type="button" id="SELECT" ng-class="{on:SelectWPBtnOn, off:!SelectWPBtnOn}" ng-disabled="TotalWPs == 0" class="select" ng-click="SelectWPBtn()">Select</button>
+            </li>
+            <li ng-class="SelectOnOff() == true? 'on' : 'off'">
+            <!-- <li ng-class="{on:TotalWPs, off:TotalWPs == 0, off:modeState.viewMode}"> -->
+            <button type="button" id="SELECTALL" class="selectAll" ng-class="{on:SelectAllWPBtnOn, off:!SelectAllWPBtnOn}" ng-disabled="TotalWPs == 0" ng-click="SelectAllWPBtn()">Select All</button>
+            </li>
+        </ul>
+        <ul>
+            <li ng-class="RemoveOnOff() == true? 'on' : 'off'">
+            <!-- <li ng-class="{on:TotalWPs, off:TotalWPs == 0, off:SelectedWP.length == 0, off:modeState.viewMode}"> -->
+            <button type="button" id="REMOVE" class="clear" ng-disabled="SelectedWP.length == 0" ng-click="RemoveSelectedWP()">Remove</button></li>
+            <li ng-class="RemoveAllOnOff() == true? 'on' : 'off'">
+            <!-- <li ng-class="{on:TotalWPs, off:TotalWPs == 0, off:modeState.viewMode}"> -->
+            <button type="button" id="REMOVEALL" class="delete" ng-disabled="TotalWPs == 0" ng-click="RemoveAllWP()">Remove All</button></li>
+
+        </ul>
+        <ul>
+            <li ng-class="{on:!modeState.viewMode, off:modeState.viewMode}"><button type="button" id="TEMPLATE" class="temlate" ng-click="tempOpen()" ng-disabled="modeState.viewMode">Template</button></li>
+            <li ng-class="{on:!modeState.viewMode, off:modeState.viewMode}"><button type="button" id="SURVEY" class="surveyGrid" ng-click="surveyOpen()" ng-disabled="modeState.viewMode">Survey Grid</button></li>
+        </ul>
+    </div>
+
+
+    <div ng-controller="mapCtrl">
+
+        <div id="map" class="map" ng-init='init()'>
+            <div id="popup"></div>
+        </div>
+    </div>
+
+    
+</div>
+
+<div id="wayPointFooter">
+    <div class="pointarea">
+        <div class="pointInfo">
+            <ul>
+                <li>Total Distance<span class="dist">{{TotalDist}}m</span></li>
+                <li>Total Flight<span class="flight">{{TotalFlight}}min</span></li>
+                <li>Total Waypoints<span class="waypoints">{{TotalWPs}}</span></li>
+            </ul>
+        </div>
+        <div class="pointMove" ng-show="!modeState.viewMode">
+            <button type="button" ng-show="UpBtnOnOff()" ng-click="ChangeWPOrder('up')"><span class="blind">왼쪽</span></button>
+            <button type="button" ng-show="EditBtnOnOff()" ng-click="OpenWPinfoModal()" ><span class="blind">EDIT</span></button>
+            <button type="button" ng-show="DownBtnOnOff()" ng-click="ChangeWPOrder('down')"><span class="blind">오른쪽</span></button>
+        </div>
+        <div class="pointList">
+            <button type="button" class="pointLeft" ng-click="ShiftLeft()" ng-show="WPDataSet.length">
+                <span class="blind">이전</span>
+            </button>
+            <button type="button" class="pointRight" ng-click="ShiftRight()" ng-show="WPDataSet.length">
+                <span class="blind">다음</span>
+            </button>
+            <div class="wpArea">
+                <ul>
+                    <li id="wp_{{wp.getProperties().order}}" ng-click="SelectWP(wp.getProperties().order)" ng-repeat="wp in WPDataSet track by $index" ng-show="!$first">
+                        <div class="wp">WP<br>{{wp.getProperties().order}}</div>
+                        <!-- <div class="dist">{{DistBtwTwoWPs}}m</div> -->
+                        <div class="dist">{{wp.getProperties().altitude}}m</div>
+                        <!-- <div class="dist"><input type="text" ng-model="DistBetweenTwoWP(wp.getProperties().order)" > </div> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>      
+</div>
+
+
+</content>
+
+
+
+<!--Way point setting layer Popup start -->
+<div id="layWayPoint" ng-show="WPinfoShow">
+        <div class="dimed"></div>
+
+        <!-- Waypoint set layer START-->
+        <div class="wayPoinySet" >
+            <div class="wayPopTop01">Waypoint {{SelectedWpOrder}}  
+                <button type="button" class="closeTypeA" ng-click="CloseWPinfoModal()">
+                    <span class=blind>닫기</span>
+                </button>
+            </div>
+            <dl>
+                <dd class="wayAdd">
+                    <div class="data">
+                        <span ng-show="GPSMode === 'latlong'">
+                            <div>Latitude 
+                                <input type="text" ng-disabled="DisableWPinfoModal" ng-model="coords[1]" > 
+                            </div>
+                            <div>Longitude 
+                                <input type="text" ng-disabled="DisableWPinfoModal" ng-model="coords[0]" > 
+                            </div>
+                        </span>
+                        <span ng-show="GPSMode === 'utm'">
+                            <div>UTM Coordinate<br>
+                                <input type="text" ng-disabled="DisableWPinfoModal" ng-model="coords[0]" > 
+                            </div>
+                        </span>
+                        <span ng-show="GPSMode === 'mgrs'">
+                            <div>MGRS grid reference<br>
+                                <input type="text" ng-disabled="DisableWPinfoModal" ng-model="coords[0]" > 
+                            </div>
+                        </span>
+                    </div>
+                    <div class="actionAdd">
+                        <button type="button" ng-disabled="DisableWPinfoModal" ng-click="OpenWPinfoActionModal()">
+                            <span>+</span> <br> Add Action
+                        </button>
+                    </div>
+
+                    <div class="actionArea">
+                        <span ng-repeat="act in wpDataActionSet" >
+                            <input type="checkbox" id="{{act.type}}" class="type01" ng-disabled="DisableWPinfoModal">
+                            <label for="{{act.type}}"> {{act.type}} </label>
+                        </span>
+                       
+                        <button type="button" ng-disabled="DisableWPinfoModal" class="waDelete" ng-click="DelCheckedWPAction()" ng-show="wpDataActionSet.length != 0">
+                            <span class="blind">삭제</span>
+                        </buttom>
+                    </div>
+
+                </dd>
+
+                <dd>
+                    <ul class="wayPoSlider">
+                        <li>
+                            <span class="bgAlt">Altitude(m)</span> 
+                            <input type="text" ng-disabled="DisableWPinfoModal" ng-model="slider.alt"  />
+                        </li>
+                        <li class="line">
+                            <div id="wey" ui-slider="slider.options" ng-disabled="DisableWPinfoModal" ng-model="slider.alt"></div>
+                        </li>
+
+                        <li>
+                            <span class="bgSpeed">Speed(m/s)</span> 
+                            <input type="text" ng-disabled="DisableWPinfoModal" ng-model="slider.speed" />
+                        </li>
+                        <li class="line">
+                            <div id="wey" ui-slider="slider.options" ng-disabled="DisableWPinfoModal" ng-model="slider.speed"></div>
+                        </li>
+
+                        <li>
+                            <span class="bgTime">Wait Time(sec)</span> 
+                            <input type="text" ng-disabled="DisableWPinfoModal" ng-model="slider.wt" />
+                        </li>
+                        <li>
+                            <div id="wey" ng-disabled="DisableWPinfoModal" ui-slider="slider.options" ng-model="slider.wt"></div>
+                        </li>
+                    </ul>
+                </dd>
+                <dd class="buttonArea">
+                    <button type="button" ng-disabled="DisableWPinfoModal" ng-click="SaveWpinfo()">Apply</button>
+                    <button type="button" ng-click="CloseWPinfoModal()">Cancel</button>
+                </dd>
+
+            </dl>
+        </div>
+        <!-- Waypoint set layer END-->
+
+        <!--ACTION ADD LAYER STSART -->
+        <div class="wayAction" ng-show="WPinfoActionShow">
+            <div class="wayPopTop02">Action Property  
+                <button type="button" class="closeTypeA" ng-click="CloseWPinfoActionModal()">
+                    <span class=blind>닫기</span>
+                </button>
+            </div>
+            <dl>
+                <dd class="selecting">
+                    <select name="Carera Trlgger" ng-change="AddWPActionPropertyChange()" ng-model="WPactionProperty" >
+                        <option value="">Choose the action..</option>
+                        <option value="Takeoff">TakeOff </option>
+                        <option value="Speed">Change Speed </option>
+                        <option value="Camera">Camera Trigger </option>
+                        <option value="Land">Land </option>
+                        <option value="Home">Return To Home</option> 
+                    </select>
+                </dd>
+                <dd ng-hide="HideRange">
+                    <ul class="distInter">
+                        <li>{{wpDataActionMsg}} <span class="sTxt">{{wpDataActionMsgUnit}}</span></li>
+                        <li>
+                             <button type="button" class="intervalBtnL" ng-disabled="subDisable" ng-click="SubDistanceInterval()"></button>
+                             <input type="text" class="intervalText" ng-model="distanceInterval">
+                             <button type="button" class="intervalBtnR" ng-disabled="addDisable" ng-click="AddDistanceInterval()"></button>  
+                        </li>
+                    </ul>
+                </dd>
+                <dd class="buttonArea">
+                    <button type="button" ng-click="AddWPActionProperty()">Add</button>
+                    <button type="button" ng-click="CloseWPinfoActionModal()">Cancel</button>
+                </dd>
+
+            </dl>
+        </div>
+        <!--ACTION ADD LAYER END -->
+</div>
+<!--Way point setting layer Popup End -->
+
+<!-- New Path layer start-->
+<div id="newPathLayer" ng-show="modalOpenNewPath">
+    <div class="dimed"></div>
+    <div class="pathNewLeyer" id="newPathLayerDraggable">
+        <div class="newPopTop"> New 
+            <button type="button" class="closeTypeA" ng-click="CloseNewPathModal()">
+                <span class=blind>닫기</span>
+            </button>
+        </div>
+        <dl>                
+            <dd>
+                <input type="text" id="newPathName" class="pathText" ng-model="NewPathName">
+            </dd>
+            <dd class="buttonArea">
+                <button type="button" class="ok" ng-click="CreateNewPath()">OK</button>
+                <button type="button" ng-click="CloseNewPathModal()">Cancel</button>
+            </dd>
+
+        </dl>
+    </div>
+</div>
+<!-- New Path layer end-->
+
+
+<!-- New Path layer start-->
+<div id="newPathLayer" ng-show="modalOpenSaveAsPath">
+    <div class="dimed"></div>
+    <div class="pathNewLeyer" id="SaveAsPathLayerDraggable">
+        <div class="newPopTop"> Save As 
+            <button type="button" class="closeTypeA" ng-click="CloseSaveAsPathModal()">
+                <span class=blind>닫기</span>
+            </button>
+        </div>
+        <dl>                
+            <dd>
+                <input type="text" id="saveAsPathName" class="pathText" ng-model="SaveAsPathName">
+            </dd>
+            <dd class="buttonArea">
+                <button type="button" class="ok" ng-click="SaveNewPathAs()">OK</button>
+                <button type="button" ng-click="CloseSaveAsPathModal()">Cancel</button>
+            </dd>
+
+        </dl>
+    </div>
+</div>
+<!-- New Path layer end-->
+
+
+
+
+<!-- Open Path layer start-->
+
+<div id="openPathLayer" ng-show="modalOpenExistingPath">
+        <div class="dimed"></div>
+
+        <div class="pathNewLeyer" id="openPathLayerDraggable">
+            <div class="openPopTop">Open  
+                <button type="button" class="closeTypeA" ng-click="CloseExistingPathModal()">
+                    <span class=blind>닫기</span>
+                </button>
+            </div>
+            <dl>                
+                <dd class="listBox">
+                    <div class="pathListArea">
+                        <ul>
+                            <li id="pathList_{{path.way_pont_path_id}}" ng-repeat="path in ExistingPathList" ng-click="SelectExistingPath(path.way_pont_path_id, path.way_pont_path_name)">
+                                <span>{{$index+1}}</span> 
+                                <button type="button" >{{path.way_pont_path_name}}</button>
+                            </li>
+
+                        </ul>
+                    </div>
+                </dd>
+                <dd><button type="button" class="btnDelete" ng-click="DeletePath()">Delete</button></dd>
+                <dd class="buttonArea">
+                    <button type="button" class="ok" ng-click="OpenExistingPath()">OK</button>
+                    <button type="button" ng-click="CloseExistingPathModal()">Cancel</button>
+                </dd>
+            </dl>
+        </div>
+</div>
+<!-- New Path layer end-->
+
+
+<!-- template layer start-->
+
+   
+ <div class="layerTypeA" id="templateLayer" ng-init="templateLayer()">
+    <div class="popTop">Template        
+        <!--div class="topIco2"><img src="images/ico/icoDroneWing.png" ></div-->
+        <button type="button" class="closeTypeB" ng-click="tempClose()">
+            <span class="blind" >닫기</span>
+        </button>
+    </div>
+   <dl>
+       <dd >
+           <article class="btnTemplat">
+               <button class="btnSquare" title="Square"><span class="blind">Square</span></button>
+               <button class="btnTriangle" title="Triangle"><span class="blind">Triangle</span></button>
+               <button class="btnCircle" title="Circle"><span class="blind">Circle</span></button>
+               <button class="btnTempZ" title="Z"><span class="blind">Z</span></button>
+           </article>
+       </dd>
+       <dd class="numPoint">
+             Number of Points 
+            <select disabled="true">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select>           
+       </dd>
+        
+        <dd class="buttonArea">
+            <button type="button" class="ok">Apply</button>
+            <button type="button" ng-click="tempClose()" >Cancel</button>
+        </dd>
+   </dl>
+
+</div>
+<!-- template layer end-->
+
+<!-- SurveyGrid layer start-->
+ <div class="layerTypeA" id="surveyGridLayer" ng-init="surveyLayer()" >
+    <div class="popTop">SurveyGrid        
+        <!--div class="topIco2"><img src="images/ico/icoDroneWing.png"></div-->
+        <button type="button" class="closeTypeB" ng-click="surveyClose()">
+            <span class="blind" >닫기</span>
+        </button>
+    </div>
+   <dl>
+       <dd>
+           <article class="survey">
+               <button class="btnSquare" title="Square"><span class="blind">Square</span></button>
+               <button class="btnPolygon" title="Polygon"><span class="blind">Polygon</span></button>
+           </article>
+       </dd> 
+        <dd class="pdT01 ">
+            <ul>
+                <li><span class="title">Dist. btw lines(m)</span> <input type="text" disabled="disabled" ng-model="colorpicker.blue2"  placeholder="0"/></li>
+                <li><div id="blue" class="slideTypeA" ui-slider="colorpicker.options" data-min="0" data-max="80" ng-model="colorpicker.blue2"></div></li>
+                <li class="pdT05"><span class="title">Angle(deg)</span> <input type="text" disabled="disabled" ng-model="colorpicker.blue3"  placeholder="0"/></li>
+                <li class="pdT05"><div id="blue" class="slideTypeA" ui-slider="colorpicker.options" data-min="0" data-max="80" ng-model="colorpicker.blue3"></div></li>
+            </ul>
+       </dd>
+        <dd class="buttonArea">
+            <button type="button" class="ok">Apply</button>
+            <button type="button" ng-click="surveyClose()" >Cancel</button>
+        </dd>
+   </dl>
+</div>
+<!-- SurveyGrid layer end-->

@@ -1,0 +1,134 @@
+
+<!--HEADER CONTENT AREA S -->
+<header>
+	<div class="btnGnb">
+		<button type="button" ng-click="gnbView()"><img src="images/btn/btnGnb.gif" alt="메뉴보기"></button>
+	</div>
+	<div class="logo" ng-click="goToMain()" title="Let drone logo"></div>
+	<ul class="baseInfo">
+		<!-- 드론 이름 -->
+		<li class="dName" ><span>Drone{{selected_drone_id}}</span></li>
+
+		<!-- 드론 연결 상태 class == { cnConnect, cnDisconnect, cnNone } -->
+		<li ng-class="getConnectionStatus()" title="Connection"><span></span>{{gaugeData.deviceConnection}}  </li>
+		
+		<!-- GPS 상태 class = {Good = gpsGood , Normal = gpsNormal , Bad = gpsBad , none = GpsNone} -->
+
+		<li ng-class="getGpsStatus()" title="GPS Status"><span></span>{{gaugeData.gpsStatus}} ({{gaugeData.satellites_count}})</li>					  
+		
+		<!-- 무선 Good Very = ntVeryGood, Good = ntGood, Normal = ntNormal, Bad =  ntBad , None = ntNone -->
+		<li ng-class="getWirelessStatus()" title="Wireless Status"><span></span>{{gaugeData.wirelessStatus}}</li>
+
+		<!-- 밧데리 class = btBad -->
+		<li ng-class="getBatteryStatus()" title="battery Status"><span></span>{{gaugeData.battery}}% 15v</li>
+
+
+		<!-- 풍향  N = wdN , NE = wdNE , E  wdE , SE = wdSE , S = wdS ,  SW = wdSW , W = wdW , NW = wdNW-->
+		<li ng-class="getWindDirection()" title="Wind Status"><span></span>{{weather.windD}} {{weather.windS}} m/s </li>
+
+		<!--온도 습도-->
+		<li class="temperature" title="Temperature">{{weather.temp}}&#176; {{weather.hum}}%</li>
+
+		<!-- 날씨  맑음 sunny, 안개  haze, 구름 조금 sCloudy, 구름 많이 lCloudy, 비 rainy, 눈 snowy, 번개 thunder -->
+		<li ng-class="getWeatherSky()" title="Weather"><span></span>{{weather.sky|uppercase}}</li>
+	</ul>
+
+	<div class="message"> 
+		<button type="button"  ng-click="messagePop()"><span class="blind">message open</span></button>
+		<div class="num">12</div>
+		<div class="messageBox">
+			<div class="messageTxt scrollme" ng-scrollbar rebuild-on="rebuild:me" is-bar-shown="barShown">
+				<table>
+					<colgroup>
+						<col width="110px">
+						<col width="*">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>System Message</th>
+							<td>t is a long established fact that a reader </td>
+						</tr>
+						<tr>
+							<th>System Message</th>
+							<td>t is a long established fact that a reader </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<button class="messagClose" ng-click="messageClose()"><img src="./images/btn/btnLayClose.png" alt="CLOSE"></button>
+		</div>
+	</div>
+
+	<div class="help"><button type="button"><img src="images/btn/btnHelp.gif" alt="HELP"></button></div>
+
+	<div class="emercency"><button type="button"><img src="images/btn/btnRmergncy.gif" alt="Emercency"></button></div>
+
+</header>
+<!--HEADER CONTENT AREA E -->
+
+
+<div id="gnbArea" ng-show="gnbHide">
+	<iframe src="" class="iframebox"></iframe>
+	<div class="dimed"></div>
+	
+	 <nav>
+	 	<!-- Main Plan -->
+		<div class="gnbMain" ng-show="gnbHide">
+			<img src="images/common/gnbMain.png" alt="GNB" usemap="#gnb">
+			<map name="gnb">
+			  <area shape="poly" coords="187,2,143,78,187,154,275,156,320,77,276,3" alt="Main" ng-click="goToMain()"  href="javascript:void(0);">
+			  <area shape="poly" coords="328,83,284,160,328,236,417,238,462,160,418,82"  alt="Plan" ng-click="gnbPlan()"   href="javascript:void(0);">
+			  <area shape="poly" coords="329,246,416,247,463,323,416,401,328,401,284,324" alt="Report" ng-click="gnbReport()" href="javascript:void(0);">
+			  <area shape="poly" coords="188,328,276,329,320,405,276,482,187,481,143,404" alt="Setting" ng-click="gnbSetting()" href="javascript:void(0);">
+			  <area shape="poly" coords="45,247,133,247,178,323,134,400,47,401,0,323" alt="Support"  href="javascript:void(0);">
+			  <area shape="poly" coords="47,85,133,86,177,160,134,234,45,234,6,157"  alt="log out" href="javascript:void(0);">
+			  <area shape="poly" coords="187,165,275,165,318,240,274,320,188,320,143,241" ng-click="gnbClose()"  href="javascript:void(0);">
+			</map>
+		</div>
+			
+		<!-- GNB Plan ng-show="gnbPlanHide"-->
+		<div class="gnbPlan" >
+			<img src="images/common/gnbPlan.png" alt="GNB" usemap="#gnbPlan">
+			<map name="gnbPlan">
+			  <area shape="poly" coords="187,2,143,78,187,154,275,156,320,77,276,3" alt="Back" ng-click="gnbBack()" href="javascript:void(0);">
+			  <area shape="poly" coords="328,83,284,160,328,236,417,238,462,160,418,82" alt="Waypoint" ng-click="goToWaypoint()" href="javascript:void(0);">
+			  <area shape="poly" coords="329,246,416,247,463,323,416,401,328,401,284,324" alt="scenario Plan" ng-click="goToScenario()" href="javascript:void(0);">
+			  <area shape="poly" coords="188,328,276,329,320,405,276,482,187,481,143,404" alt="Evaluation Template" href="javascript:void(0);">
+			  <!--area shape="poly" coords="45,247,133,247,178,323,134,400,47,401,0,323" href="#"-->
+			  <!--area shape="poly" coords="47,85,133,86,177,160,134,234,45,234,6,157" href="#"-->
+			  <!--area shape="poly" coords="187,165,275,165,318,240,274,320,188,320,143,241"-->
+			</map>
+		</div>
+
+		<!-- GNB Report  ng-show="gnbReportHide"-->
+		<div class="gnbReport">
+			<img src="images/common/gnbReport.png" alt="Report" usemap="#gnbReport" >
+			<map name="gnbReport">
+			  <area shape="poly" coords="187,2,143,78,187,154,275,156,320,77,276,3" alt="back" ng-click="gnbBack()" href="javascript:void(0);">
+			  <area shape="poly" coords="328,83,284,160,328,236,417,238,462,160,418,82"  alt="Evaluation Report" href="javascript:void(0);">
+			  <area shape="poly" coords="329,246,416,247,463,323,416,401,328,401,284,324" alt="Solar Fileld" href="javascript:void(0);">
+			  <area shape="poly" coords="188,328,276,329,320,405,276,482,187,481,143,404" alt="Log View" href="javascript:void(0);">
+			  <!--area shape="poly" coords="45,247,133,247,178,323,134,400,47,401,0,323" href="#"-->
+			  <!--area shape="poly" coords="47,85,133,86,177,160,134,234,45,234,6,157" href="#"-->
+			  <!--area shape="poly" coords="187,165,275,165,318,240,274,320,188,320,143,241"-->
+			</map>
+		</div>
+
+		<div class="gnbSetting">
+			<img src="images/common/gnbSetting.png" alt="Report" usemap="#gnbSetting" >
+			<map name="gnbSetting">
+			  <area shape="poly" coords="187,2,143,78,187,154,275,156,320,77,276,3" alt="back" ng-click="gnbBack()" href="javascript:void(0);">
+			  <area shape="poly" coords="328,83,284,160,328,236,417,238,462,160,418,82"  alt="Drone Configuration"  ng-click="" href="javascript:void(0);">
+			  <area shape="poly" coords="329,246,416,247,463,323,416,401,328,401,284,324" alt="Camera Configuration" ng-click="goToCameraView()" href="javascript:void(0);">
+			  <area shape="poly" coords="188,328,276,329,320,405,276,482,187,481,143,404" alt="Extermal Device Setting" ng-click="goToDeviceManager()" href="javascript:void(0);">
+			  <area shape="poly" coords="45,247,133,247,178,323,134,400,47,401,0,323" alt="Map Setting" ng-click="goToMapSetting()" href="javascript:void(0);">
+			  <area shape="poly" coords="47,85,133,86,177,160,134,234,45,234,6,157" alt="Environment Setting" href="javascript:void(0);" >
+			  <!--area shape="poly" coords="187,165,275,165,318,240,274,320,188,320,143,241"-->
+			</map>
+		</div>
+
+			
+
+
+	</nav>
+</div>

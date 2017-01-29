@@ -1,0 +1,482 @@
+
+<content ng-init="init()">
+
+	<div id="deviceArea">
+	    <div class="modeArea">
+	        <ul>
+	            <li><button type="button" class="new" ng-click="newDrone()">NEW</button></li>
+	            <li><button type="button" class="open" ng-click="openDrone()">OPEN</button></li>
+	            <li><button type="button" class="save" ng-click="saveDrone()">SAVE</button></li> 
+	            <li><button type="button" class="saveas" ng-click="saveAsDrone()">SAVE AS</button></li>           
+	            <li><button type="button" class="cancel">CENCEL</button></li>	            
+	        </ul>
+	    </div>
+
+	    <div class="deviceCon">
+	    	
+	    	<dl class="droneInfo">
+	    		<dt><span>Drone</span> Information</dt>
+	    		<dd>
+	    			<div class="droneImgArea">
+	    				<img src="../images/temp/tempDrone325225.jpg" alt="">
+	    				<button>+</button>	
+	    			</div>
+	    		
+	    			<table>
+	    				<colgroup>
+	    					<col width="65px">
+	    					<col width="*">
+	    				</colgroup>
+	    				<tbody>
+	    					<tr>
+	    					 	<th>Name</th>
+	    					 	<td>
+	    					 		<input type="text" name="" value="{{dronInfo.name}}" ng-model="dronInfo.name"/>
+	    					 	</td>
+	    					</tr>
+	    					<tr>
+	    					 	<th>Model</th>
+	    					 	<td>{{dronInfo.modelName}}</td>
+	    					</tr>
+	    					<tr>
+	    					 	<th>Mfr.</th>
+	    					 	<td>{{dronInfo.manufacturer}}</td>
+	    					</tr>
+	    					<tr>
+	    					 	<th>Type</th>
+	    					 	<td>{{dronInfo.droneType}}</td>
+	    					</tr>
+	    					<tr>
+	    					 	<th>Desc.</th>
+	    					 	<td><textarea ng-model="dronInfo.description">{{dronInfo.description}}</textarea></td>
+	    					</tr>
+	    				</tbody>
+	    			</table>
+	    		</dd>
+	    	</dl>
+
+	    	<div class="droneSet">
+	    		<dl class="droneStrcut">
+	    			<dt><span>Drone</span> Structure</dt>
+	    			<dd>
+	    				<span class="btnStrctArea03"><button type="button" class="btnStrctTypeA">Drone</button></span>
+	    				<ul class="depth2">
+	    					<li>
+	    						<span class="btnStrctArea02">
+    							<button 
+    								type="button" 
+    								ng-click="registerDroneSubThing('fcc')"
+    								ng-class="dronInfo.subThing.fcc == undefineded ? 'btnStrctOff btnStrctTypeC' : 'btnStrctTypeC'">
+    								FCC
+    							</button>
+	    						<div class="btncolorNum {{selectedFccLiItemClass}}"
+	    							 ng-click="selectCommunicationItem('fcc', selectedFccRowNum)">
+	    							 {{selectedFccRowNum}}
+									<ol ng-show="fccDisplayProperty">
+										<li ng-repeat="commItem in communicationItemList" ng-click="selectedFccItem($index+1)">
+											{{commItem}}
+										</li>
+									</ol>
+	    						</div>
+	    						</span>
+	    					</li>
+
+	    					<li>
+	    						<span class="btnStrctArea02">
+    							<button 
+    								type="button" 
+    								ng-click="registerDroneSubThing('flightCamera')"
+    								ng-class="dronInfo.subThing.flightCamera ==  undefineded ? 'btnStrctOff btnStrctTypeB' : 'btnStrctTypeB'">
+    								Flight Camera
+    							</button>
+	    						</span>
+	    					</li>
+	    					<li>
+	    						<span class="btnStrctArea01">
+	    						<button 
+	    							type="button" 
+    								ng-click="registerDroneSubThing('gimbal')"
+    								ng-class="dronInfo.subThing.gimbal == undefineded ? 'btnStrctOff btnStrctTypeC' : 'btnStrctTypeC'">Gimbal
+	    						</button>
+	    						<div class="btncolorNum {{selectedGimbalLiItemClass}}"
+	    							 ng-click="selectCommunicationItem('gimbal', selectedGimbalRowNum)">
+	    							 {{selectedGimbalRowNum}}
+									<ol ng-show="gimbalDisplayProperty">
+										<li ng-repeat="commItem in communicationItemList" ng-click="selectedGimbalItem($index+1)">
+											{{commItem}}
+										</li>
+									</ol>
+	    						</div>
+	    						</span>
+								<ul class="depth3">
+									<li>
+									<span class="btnStrctArea02">
+									<button 
+										type="button" 
+	    								ng-click="registerDroneSubThing('motor')"
+	    								ng-class="dronInfo.subThing.gimbal.subThing.motor ==  undefineded ? 'btnStrctOff btnStrctTypeB' : 'btnStrctTypeB'">
+										Motor
+									</button>
+									</span>
+									</li>
+									<li>
+									<span class="btnStrctArea02">
+									<button 
+										type="button" 
+	    								ng-click="registerDroneSubThing('dayCamera')"
+	    								ng-class="dronInfo.subThing.gimbal.subThing.dayCamera ==  undefineded ? 'btnStrctOff btnStrctTypeB' : 'btnStrctTypeB'">
+										Day Camera
+									</button>
+									</span>
+									</li>
+									<li>
+									<span class="btnStrctArea02">
+									<button 
+										type="button" 
+	    								ng-click="registerDroneSubThing('nightCamera')"
+	    								ng-class="dronInfo.subThing.gimbal.subThing.nightCamera ==  undefineded ? 'btnStrctOff btnStrctTypeB' : 'btnStrctTypeB'">
+										Night Camera
+									</button>
+									</span>
+									</li>
+								</ul>
+	    					</li>
+	    					<li>
+	    					<span class="btnStrctArea02">
+	    					<button 
+	    						type="button" 
+								ng-click="registerDroneSubThing('battery')"
+								ng-class="dronInfo.subThing.battery ==  undefineded ? 'btnStrctOff btnStrctTypeB' : 'btnStrctTypeB'">Battery
+	    					</button>
+	    					</li>
+	    					<li>
+	    					<span class="btnStrctArea02">
+	    					<button 
+	    						type="button" 
+    								ng-click="registerDroneSubThing('referenceKit')"
+    								ng-class="dronInfo.subThing.referenceKit == undefineded ? 'btnStrctOff btnStrctTypeC' : 'btnStrctTypeC'">
+	    						Reference Kit
+	    					</button>
+	    						<div class="btncolorNum {{selectedReferenceKitLiItemClass}}"
+	    							 ng-click="selectCommunicationItem('referenceKit', selectedReferenceKitRowNum)">
+	    							 {{selectedReferenceKitRowNum}}
+									<ol ng-show="referenceKitDisplayProperty">
+										<li ng-repeat="commItem in communicationItemList" ng-click="selectedReferenceKitItem($index+1)">
+											{{commItem}}
+										</li>
+									</ol>
+	    						</div>
+	    					</li>
+	    				</ul>
+
+	    			</dd>
+	    		</dl>
+
+
+
+
+	    		<dl class="droneComm">
+	    			<dt><span>Drone</span> Communication 
+						<div class="btnAreaA">
+							<button type="button" ng-click="addrow()"><img src="images/btn/btnPlus.png"></button>
+							<button type="button" ng-click="removerow()"><img src="images/btn/btnMinus.png"></button>
+						</div>
+	    			</dt>
+	    			<dd>
+	    				<div class="comArea">
+	    					<table>
+	    						<colgroup>
+	    							<col width="15%">
+	    							<col width="30%">
+	    							<col width="25%">
+	    							<col width="20%">
+	    						</colgroup>
+	    						<thead>
+	    							<tr>
+	    								<th>No</th>
+	    								<th>IP</th>
+	    								<th>Port</th>
+	    								<th>Advance</th>
+	    							</tr>
+	    						</thead>
+								<tbody id="commTbody">
+									<tr ng-repeat="comm in dronInfo.commDeviceList" ng-click="selectedCommItem($index+1)" ng-class="{on: $index+1 == selectedCommRowNum}">
+
+										<td><span class="colNum0{{$index+1}}">{{$index+1}}</span></td>
+										<td>{{comm.commIP}}</td>
+										<td>{{comm.commPort}}</td>
+										<td>
+											<button ng-click="setCommAdvSetting(comm)">
+											<img src="images/btn/btnSet.png">
+											</button>
+										</td>
+									</tr>
+								</tbody>
+	    					</table>
+	    					
+	    				</div>
+
+	    			</dd>
+	    		</dl>
+
+	    	</div>
+
+	    </div>
+	</div>
+
+	
+</content>
+
+
+<!-- Selet Drone Model layer start-->
+<div id="seletDroneModelLayer" class="seletModelLayer" ng-show="droneModelDisplayProperty">
+	<div class="dimed"></div>
+
+	<div class="modelLeyer" >
+		<div class="popTop">Selet Drone Model  
+			<div class="topIco"><img src="images/ico/icoDroneTop.png"></div>
+            <button type="button" class="closeTypeA" ng-click="modalClose('droneModel')">
+                <span class=blind>닫기</span>
+            </button>
+        </div>
+		<dl>				
+			<dd >
+				<div class="listBox">
+					<div class="listTh">
+						<span class="num">No</span>
+						<span class="name">Name</span>
+						<span class="nfr">Nfr.</span>
+					</div>
+					<ul>     
+						<li ng-repeat="drone in droneModelList" ng-click="selectedItem($index+1)" ng-class="{on: $index+1 == selectedRowNum}">
+							<span class="num">{{$index+1}}</span>
+							<span class="name">{{drone.name}}</span>
+							<span class="nfr">{{drone.manufacturer}}</span>
+						</li>
+					</ul>
+				</div>
+								
+			</dd>
+			
+			<dd class="buttonArea">
+				<button type="button" class="ok" ng-click="setDroneInfo(droneModelList[selectedRowNum-1], 'droneModel')">Ok</button>
+				<button type="button" ng-click="modalClose('droneModel')">Cancel</button>
+			</dd>
+
+		</dl>
+	</div>
+</div>
+<!-- Selet Drone Model layer end-->
+
+<!-- Selet Registerd Drone layer start-->
+<div id="seletRegisterdDroneLayer" class="seletModelLayer" ng-show="registerdDronDisplayProperty">
+	<div class="dimed"></div>
+
+	<div class="modelLeyer" >
+		<div class="popTop">Select Registerd Drone
+			<div class="topIco"><img src="images/ico/icoDroneTop.png"></div>
+            <button type="button" class="closeTypeA" ng-click="modalClose('registeredDrone')">
+                <span class=blind>닫기</span>
+            </button>
+        </div>
+		<dl>				
+			<dd >
+				<div class="listBox">
+					<div class="listTh"><span class="num">No</span> <span class="name">Name</span> <span class="nfr">Nfr.</span></div>
+					<ul>     
+						<li ng-repeat="drone in droneList" ng-click="selectedItem($index+1)" ng-class="{on: $index+1 == selectedRowNum}">
+							<span class="num">{{$index+1}}</span>
+							<span class="name">{{drone.name}}</span>
+							<span class="nfr">{{drone.manufacturer}}</span>
+						</li>
+					</ul>
+				</div>
+								
+			</dd>
+			
+			<dd class="buttonArea">
+				<button type="button" class="ok" ng-click="setDroneInfo(droneList[selectedRowNum-1], 'registeredDrone')">Ok</button>
+				<button type="button" ng-click="modalClose('registeredDrone')">Cancel</button>
+			</dd>
+
+		</dl>
+	</div>
+</div>
+<!-- Selet Drone Model layer end-->
+
+
+<!-- Selet Registered Model layer start-->
+<div class="seletRegistLayer" ng-show="selectSubThingDisplayProperty">
+	<div class="dimed"></div>
+
+	<div class="RegistLeyer" >
+		<div class="popTop">Select Registered Model 
+			<div class="topIco"><img src="images/ico/icoRegistTop.png"></div>
+            <button type="button" class="closeTypeA" ng-click="modalClose('droneSubThing')" >
+                <span class=blind>닫기</span>
+            </button>
+        </div>
+		<dl>				
+			<dd ng-show="subThingModelTabDisplayProperty">
+				<div class="listTap"><button class="on">Model</button><button ng-click="showTab()">{{subThingItem.tabName}}</button></div>
+				<div class="listBox">
+					<div class="listTh"><span class="num">No</span> <span class="name">Name</span> <span class="nfr">Mfr.</span></div>
+					<ul>
+						<li ng-repeat="sub in droneSubModelList" ng-click="selectSubThingData(subThingType, sub.id, $index+1)" ng-class="{on: $index+1 == selectedSubThingNum}">
+							<span class="num">{{$index+1}}</span>
+							<span class="name">{{sub.name}}</span>
+							<span class="nfr">Mfr.</span>
+						</li>
+					</ul>
+				</div>								
+			</dd>
+			<dd ng-show="subThingRegisterTabDisplayProperty">
+				<div class="listTap"><button ng-click="showTab()">Model</button><button  class="on">{{subThingItem.tabName}}</button></div>
+				<div class="listBox">
+					<div class="listTh"><span class="num">No</span> <span class="name">{{subThingItem.subject}}</span> <span class="nfr">Mfr.</span></div>
+					<ul>     
+						<li ng-repeat="sub in droneSubThingList" ng-click="selectSubThingData(subThingType, sub.id, $index+1)" ng-class="{on: $index+1 == selectedSubThingNum}">
+							<span class="num">{{$index+1}}</span>
+							<span class="name">{{sub.name}}</span>
+							<span class="nfr">Mfr.</span>
+						</li>
+					</ul>
+				</div>
+			</dd>
+			<dd class="pdT01">
+				<div class="tableBox">
+					<table>
+						<colgroup>
+							<col width="">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr ng-repeat="item in subThingItem.dataLabel">
+								<th>{{item.value}}</th>
+								<td><input class="on" type="" id="{{item.id}}" value="" ng-model="droneSubThingData[item.id]"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>							
+			</dd>			
+			<dd class="buttonArea">
+				<button type="button" class="ok" ng-click="setDataset('droneSubThing', droneSubThingData)">Ok</button>
+				<button type="button" ng-click="modalClose('droneSubThing')">Cancel</button>
+			</dd>
+
+		</dl>
+	</div>
+</div>
+<!-- Selet Registered Model layer end-->
+
+
+
+
+
+
+<!-- Advance Setting layer start-->
+<div id="advancelLayer" ng-show="advanceDisplayProperty">
+	<div class="dimed"></div>
+
+	<div class="settingLeyer" >
+		<div class="popTop">Advance Setting 
+			<div class="topIco"><img src="images/ico/icoAdvanceTop.png"></div>
+            <button type="button" class="closeTypeA" ng-click="modalClose('advanceSetting')" >
+                <span class=blind>닫기</span>
+            </button>
+        </div>
+		<dl>				
+			<dd>
+				<table>
+					<colgroup>
+						<col width="">
+						<col width="">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th><span class="setIp">IP</span></th>
+							<td><input type="text" name="" value="{{advanceInfo.commIP}}" ng-model="advanceInfo.commIP"></td>
+						</tr>
+						<tr>
+							<th><span class="setPort">Port</span></th>
+							<td><input type="text" name="" value="{{advanceInfo.commPort}}" ng-model="advanceInfo.commPort"></td>
+						</tr>
+					</tbody>
+				</table>								
+			</dd>
+			<dd>
+				<table>
+					<colgroup>
+						<col width="">
+						<col width="">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>Comm Type</th>
+							<td>
+								<select ng-model="advanceInfo.commType">
+									<option ng-selected="advanceInfo.commType == 'TCP'">TCP</option>
+									<option ng-selected="advanceInfo.commType == 'UDP'">UDP</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>Socket Type</th>
+							<td>
+								<select ng-model="advanceInfo.commSocketType">
+									<option ng-selected="advanceInfo.commSocketType == 'Server'">Server</option>
+									<option ng-selected="advanceInfo.commSocketType == 'Client'">Client</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>Portocol</th>
+							<td>
+								<select ng-model="advanceInfo.commProtocolType">
+									<option ng-selected="advanceInfo.commProtocolType == 'mavlink'">mavlink</option>
+								</select>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</dd>
+			
+			<dd class="buttonArea">
+				<button type="button" ng-click="setDataset('advanceSetting', advanceInfo)" class="ok">Ok</button>
+				<button type="button" ng-click="modalClose('advanceSetting')">Cancel</button>
+			</dd>
+
+		</dl>
+	</div>
+</div>
+<!-- Advance Setting layer end-->
+
+<div
+    bn-modals
+    ng-show="subview"
+    class="m-modals"
+    ng-switch="subview">
+
+    <!-- BEGIN: Alert Modal. -->
+    <div
+        ng-switch-when="confirm"
+        ng-controller="ConfirmModalController"
+        class="modal">
+
+        <p>
+            {{ message }}
+        </p>
+
+        <p>
+            <a ng-click="close()">Ok, I got it!</a>
+        </p>
+
+        <!-- This is to demonstrate that we can jump from one modal to another. -->
+        <p>
+            <a ng-click="jumpToConfirm()" class="jump">Jump over to the confirm modal</a>
+        </p>
+
+    </div>
+</div>
+
+

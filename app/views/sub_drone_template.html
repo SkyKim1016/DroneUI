@@ -1,0 +1,88 @@
+
+
+<div id="section-icon" >
+	<div class="row">
+		<figure id="icon-figure" ng-click="toggleClass()"><img src="images/icon_push_left_top.png" alt="push icon" title="push icon"></figure>
+		<div id="icon-new">
+			<span id="circle" ng-if="count!=0">{{ count }}</span>
+			<div id="group-description" ng-show="showMessage">
+				<ul>
+					<li ng-repeat="push in pushList">
+						<div class="icon-title new" ng-click="show($index)" >
+							<figure ng-show="push.image"><img ng-src="{{push.image}}" alt="Image"></figure>
+							<div>
+								<h4 ng-show="push.title">{{ push.title }} </h4>
+								<p ng-show="push.content">{{ push.content }}</p>
+							</div>
+						</div>
+						<div id="icon-description{{$index}}" class="none">
+							<h3 ng-show="push.title">{{ push.title }}</h3>
+							<p ng-show="push.content">{{ push.content }}</p>
+							<p ng-show="push.link"><a ng-click="openLink(push.link)">Link</a></p>
+							<figure ng-show="push.image"><img ng-src="{{push.image}}" alt="Image"></figure>
+						</div>
+					</li>
+				</ul>
+			</div>   
+		</div>
+		<span id="push-able-button" >
+            <input
+                title="inputSwitch"
+                data-bs-switch
+                ng-model="pushOn"
+                type="checkbox"
+                data-switch-active="{{ isActive }}"
+                data-switch-on-text="{{ onText }}"
+                data-switch-off-text="{{ offText }}"
+                data-switch-on-color="{{ onColor }}"
+                data-switch-off-color="{{ offColor }}"
+                data-switch-animate="{{ animate }}"
+                data-switch-size="{{ size }}"
+                data-switch-label="{{ label }}"
+                data-switch-icon="{{ icon }}"
+                data-switch-radio-off="{{ radioOff }}"
+                data-switch-label-width="{{ labelWidth }}"
+                data-switch-handle-width="{{ handleWidth }}"
+                data-switch-wrapper="{{ wrapper }}"
+                ng-true-value="true"
+                ng-false-value="false"
+            >
+        </span>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+            <div class="input-group">
+                <input title="inputTopic" type="text" class="form-control" ng-model="topic"> 
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="subscribe(topic)">Subscribe</button>
+                </span>
+
+            </div><!-- /input-group -->
+		</div><!-- /.col-lg-6 -->
+	</div><!-- /.row -->
+	<div class="row" ng-if="subscribingTopics.length!=0">
+		<div class="col-lg-12">
+			<div class="panel panel-default" style="margin-top:10px;">
+				<div class="panel-heading">
+					Subscribing
+				</div>
+				<ul class="list-group" >
+					<li class="list-group-item" ng-repeat="subscribingTopic in subscribingTopics" style="overflow:hidden" >
+						<span style="">
+							{{subscribingTopic}}
+						</span>
+						<button class="btn btn-default" ng-click="unsubscribe(subscribingTopic)" style="float:right;">
+							<i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+						</button>
+						
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	</div><!-- /.row -->
+	
+
+</div>
+
+

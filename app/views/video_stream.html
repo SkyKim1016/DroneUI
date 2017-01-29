@@ -1,0 +1,31 @@
+<div ng-controller='streamingCtrl'>
+	<div>
+		<dl class="cLayerTypeA"  ng-hide='hideState[0]'>
+			<dt><b>Drone-1</b> Flight Video <button type="button" ng-click="doHide(0)"><span class="blind">CLOSE</span></button></dt>
+			<dd>
+				<a ng-dblclick="goToCamera()">
+					<tgos-video winid='XnsSdkWindow1' kindplayer='playerdata[0]'></tgos-video>
+				</a>
+			</dd>
+
+		</dl>
+
+		<dl class="cLayerTypeA"  ng-hide='hideState[1]'>
+			<dt>
+				<b>Camera-2</b> Video 
+				<button type="button" ng-click="doHide(1)">
+					<span class="blind">CLOSE</span>
+				</button>
+			</dt>
+			<dd>
+				<a ng-dblclick="goToCamera()">
+					<tgos-video winid='XnsSdkWindow2' kindplayer='playerdata[1]'></tgos-video>
+				</a>
+			</dd>
+		</dl>
+
+		<tgos-video-sdk></tgos-video-sdk>
+
+	</div>
+
+</div>

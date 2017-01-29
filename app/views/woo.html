@@ -1,0 +1,19 @@
+<script type="text/ng-template" id="origin.html">
+    <div>
+        <input type='button' value='+' ng-click="toggle(this)">
+        {{node.name}}
+        <input type='button' value="visible">      
+    </div>
+    <ol ng-model="node.items" >
+        <li ng-repeat="node in node.items" ng-include="'origin.html'"></li>
+    </ol>
+</script>
+
+<div> 
+    <h1>Tree Test</h1>
+</div>
+<div id="wootree" ng-controller="wooCtrl" ng-init="init()">
+    <ol ng-model="data" >
+        <li ng-repeat="node in data" ng-include="'origin.html'"></li>
+    </ol>
+</div>

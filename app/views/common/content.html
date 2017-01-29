@@ -1,0 +1,15 @@
+<div class="bg-primary kind-content">
+    <div class="container">
+        <h1 data-ng-bind="'MAIN_HEADING' | translate">&nbsp;</h1>
+        <p class="lead" data-ng-bind="'MAIN_CONTENT' | translate">&nbsp;</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 text-center" data-ng-repeat="i in [1,2,3]">
+            <h3 data-ng-bind="'SUB_HEADING_'+i | translate">&nbsp;</h3>
+            <p data-ng-bind="'SUB_CONTENT_'+i | translate">&nbsp;</p>
+        </div>
+    </div>
+</div>

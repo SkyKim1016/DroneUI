@@ -1,0 +1,69 @@
+<!--  /////////////////////////////////////////////////////////////////////////////////// -->
+<!--  Copyright(c) 2012 by Hanwha Techwin, Inc.                                          -->
+<!--                                                                                      -->
+<!--  This software is copyrighted by, and is the sole property of Hanwha Techwin.       -->
+<!--  All rights, title, ownership, or other interests in the software remain the         -->
+<!--  property of Hanwha Techwin. This software may only be used in accordance with      -->
+<!--  the corresponding license agreement. Any unauthorized use, duplication,             -->
+<!--  transmission, distribution, or disclosure of this software is expressly             -->
+<!--  forbidden.                                                                          -->
+<!--                                                                                      -->
+<!--  This Copyright notice may not be removed or modified without prior written          -->
+<!--  consent of Hanwha Techwin.                                                         -->
+<!--                                                                                      -->
+<!--  Hanwha Techwin reserves the right to modify this software without notice.          -->
+<!--                                                                                      -->
+<!--  Hanwha Techwin, Inc.                                                               -->
+<!--  KOREA                                                                               -->
+<!--  http://www.samsungtechwin.co.kr                                                     -->
+<!--  /////////////////////////////////////////////////////////////////////////////////// -->
+<!--  @ File Name : SingleLive.html                                                       -->
+<!--  @ File Description : SingleLive Source Code File.                                   -->
+<!--                       Define the entire function.                                    -->
+<!--  /////////////////////////////////////////////////////////////////////////////////// -->
+
+<!--<TABLE cellSpacing=1 cellPadding=1 width="75%" border=0 >-->
+<style>
+	.video-btn {
+		width: 120px;
+		min-height: 40px;
+		margin-left: 5px;
+		margin-bottom: 5px;
+		padding: 5px;
+		color: white;
+	}
+</style>
+
+
+<div ng-controller='activeXLiveCtrl'>
+	<div ng-init='activex_onload()'>
+
+		<dl class="cLayerTypeA">
+			<dt><b>Drone-1</b> Flight Video <button type="button"><span class="blind">CLOSE</button></dt>
+			<!--			<dd><a ng-click="goToCamera()"><img src="images/temp/temView01.jpg" alt="" ng-click="expandCamera()"></a></dd>-->
+			<dd>
+				<a ng-click="goToCamera()">
+					<OBJECT ID=XnsSdkWindow1 classid=clsid:C3F99E59-433D-4A79-A188-B36ACE8F78F8 type="application/html"></OBJECT>
+				</a>
+			</dd>
+
+		</dl>
+		<dl class="cLayerTypeA">
+			<dt>
+				<b>Camera-2</b> Video 
+				<button type="button">
+					<span class="blind">CLOSE</span>
+				</button>
+			</dt>
+			<dd>
+				<a ng-click="goToCamera()">
+					<!--					<img src="images/temp/temView02.jpg" ng-click="expandCamera()" alt="">-->
+					<OBJECT ID=XnsSdkWindow2 classid=clsid:C3F99E59-433D-4A79-A188-B36ACE8F78F8 type="application/html"></OBJECT>
+				</a>
+			</dd>
+		</dl>
+		<OBJECT ID=XnsSdkDevice style="visibility: hidden" classid=clsid:9BED9251-E8E7-4B67-B281-ADC06BA7988D type="application/html"></OBJECT>
+
+	</div>
+
+</div>

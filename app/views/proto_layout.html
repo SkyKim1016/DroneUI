@@ -1,0 +1,26 @@
+<style>
+    .sideDeviceTree{
+        float:left;
+        min-width: 25%;
+        padding: 10px;
+    }
+    
+    .mainMap{
+        float:left;
+        min-width: 70%;
+        padding: 10px;
+    }
+    .statusBottom{
+        clear:both;
+        padding: 10px;
+    }
+
+</style>
+<div>
+    <input type="text" placeholder="Enter Drone Identity Number" ng-model="drone_id" />
+</div>
+<div data-ng-include data-src="'./views/device_tree.html'" class="sideDeviceTree"></div>
+<div data-ng-include data-src="'./views/map.html'" ng-controller="mapCtrl" class="mainMap"></div>
+<div data-ng-include data-src="'./views/dashboard.html'" ng-controller="dashboardCtrl" class="statusBottom"></div>
+
+<div data-ng-include data-src="'./views/activex_player.html'" ></div>

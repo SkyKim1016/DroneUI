@@ -1,0 +1,541 @@
+ <content ng-show="mainViewArea">
+	<!-- List View -->
+	<div class="listMenu" ng-init="dummyDataInit()" >
+		<button type="button" class="droneList" ng-click="listBtnClick()"><img src="images/btn/btnList.gif" alt="리스트"></button>
+		
+		<ul class="listDepth01" ng-show="listMenu">			
+
+			<li class="listDrone" ng-show="listMenu">
+				<!--선택시 class="btnDrone on"-->
+				<button type="button" class="btnDrone" ng-click="listMenuClick('btnDrone')" title="Drone list"></button>
+
+				<div class="listDroneBox"  ng-show="listDrone" ng-modal="droneSlide()">
+
+					<div class="droneBox">
+						<ul class="drone">
+							<!--선택시 class="on"-->
+
+							<li ng-repeat="drone in dummyData">
+								<button id="{{drone.id}}" ng-click="selectDroneClick(drone.id)" type="button" class="">
+									{{drone.name}}
+								</button>
+							</li>
+						</ul>	
+						<ul class="drone">
+							<!--선택시 class="on"-->
+
+							<li ng-repeat="drone in dummyData">
+								<button id="{{drone.id}}" ng-click="selectDroneClick(drone.id)" type="button" class="">
+									{{drone.name}}
+								</button>
+							</li>
+						</ul>	
+						<ul class="drone">
+							<!--선택시 class="on"-->
+
+							<li ng-repeat="drone in dummyData">
+								<button id="{{drone.id}}" ng-click="selectDroneClick(drone.id)" type="button" class="">
+									{{drone.name}}
+								</button>
+							</li>
+						</ul>					
+					</div>
+
+				</div>
+				<div class="slideBtnBox" >
+					<button type="button" class="btnleft" ng-click="ShiftLeft()"><img src="images/btn/btnLeftTypeB.png"></button>
+					<span>1</span>
+					<button type="button" class="btnRight"  ng-click="ShiftRight()"><img src="images/btn/btnRightTypeB.png"></button>
+				</div>
+				<button type="button" class="btnConnect" ng-click="connectOpen()" title="Connect"><img src="images/btn/btnConnect.png" alert="Connect"></button>
+
+
+			</li>
+
+			<li class="listObject" ng-show="listMenu">
+				<!--선택시 class="btnObject on"-->
+				<button type="button" class="btnObject" ng-click="listMenuClick('btnObject')" title="Object list"></button>
+				<ul class="ovject" ng-show="listObject">
+					<!--선택시 class="on"-->
+					<li><button type="button" id="airZone" class="on" ng-click="listObjectClick('airZone')">Air Zone</button></li>
+					<li><button type="button" id="obstacle" ng-click="listObjectClick('obstacle')">Obstacle</button></li>
+					<li><button type="button" id="noFlyZone" ng-click="listObjectClick('noFlyZone')">No Fly Zone</button></li>
+					<li><button type="button" id="geoFence" ng-click="listObjectClick('geoFence')">Geo-Fence</button></li>
+				</ul>
+			</li>
+
+			<li class="listCamera" ng-show="listMenu">
+
+				<button type="button" class="btnCamera" ng-click="listMenuClick('btnCamera')" title="Camera list"></button>
+				<ul class="camera" ng-show="listCamera">
+					<li><button id="camera1" ng-click="selectCameraClick('camera1')" type="button" class="">Camera Name</button></li>
+					<li><button id="camera2" ng-click="selectCameraClick('camera2')" type="button" class="">Camera Name</button></li>
+					<li><button id="camera3" ng-click="selectCameraClick('camera3')" type="button" class="">Camera Name</button></li>
+					<li><button id="camera4" ng-click="selectCameraClick('camera4')" type="button" class="">Camera Name</button></li>
+					<li><button id="camera5" ng-click="selectCameraClick('camera5')" type="button" class="">Camera Name</button></li>
+					<li><button id="camera6" ng-click="selectCameraClick('camera6')" type="button" class="">Camera Name</button></li>
+					<li><button id="camera7" ng-click="selectCameraClick('camera7')" type="button" class="">Camera Name</button></li>
+					<li><button id="camera8" ng-click="selectCameraClick('camera8')" type="button" class="">Camera Name</button></li>
+				</ul>
+			</li>
+
+
+			<li class="listSensor" ng-show="listMenu">
+				<button type="button" class="btnSensor" ng-click="listMenuClick('btnSensor')" title="Seneor list"></button>
+				<ul class="sensor" ng-show="listSensor">
+					<li><button id="sensor1" ng-click="selectSensorClick('sensor1')" type="button" class="">Sensor Name</button></li>
+					<li><button id="sensor2" ng-click="selectSensorClick('sensor2')" type="button" class="">Sensor Name</button></li>
+					<li><button id="sensor3" ng-click="selectSensorClick('sensor3')" type="button" class="">Sensor Name</button></li>
+					<li><button id="sensor4" ng-click="selectSensorClick('sensor4')" type="button" class="">Sensor Name</button></li>
+					<li><button id="sensor5" ng-click="selectSensorClick('sensor5')" type="button" class="">Sensor Name</button></li>
+					<li><button id="sensor6" ng-click="selectSensorClick('sensor6')" type="button" class="">Sensor Name</button></li>
+					<li><button id="sensor7" ng-click="selectSensorClick('sensor7')" type="button" class="">Sensor Name</button></li>
+					<li><button id="sensor8" ng-click="selectSensorClick('sensor8')" type="button" class="">Sensor Name</button></li>
+					<li><button id="sensor9" ng-click="selectSensorClick('sensor9')" type="button" class="">Sensor Name</button></li>
+				</ul>
+			</li>
+
+		</ul>	
+
+	</div>
+
+	<!-- Camera Modal -->
+	<div class="cameraLayer" ng-if="cameraModal" >
+<!--
+		<dl class="cLayerTypeA">
+			<dt><b>Drone-1</b> Flight Video <button type="button" ><span class="blind">CLOSE</button></dt>
+			<dd><a ng-click="goToCamera()"><img src="images/temp/temView01.jpg" alt="" ng-click="expandCamera()"></a></dd>
+		</dl>
+
+		<dl class="cLayerTypeA">
+			<dt>
+				<b>Camera-2</b> Video 
+				<button type="button">
+					<span class="blind">CLOSE</span>
+				</button>
+			</dt>
+			<dd>
+				<a ng-click="goToCamera()">
+					<img src="images/temp/temView02.jpg" ng-click="expandCamera()" alt="">
+				</a>
+			</dd>
+		</dl>		
+-->
+		<div ng-include="'./views/video_stream.html'"></div>
+
+		
+	</div>
+	
+	<!-- Map View -->
+	<div class="mapArea">
+		<div id="map" class="map" ng-controller="mapCtrl" ng-init='init()'><div id="popup"></div></div>
+	</div>
+
+</content>
+
+
+
+<!-- cameraArea  -->
+<content ng-controller="streamingCtrl"  ng-show="cameraViewArea">
+
+	<div class="cameraArea">
+		<div class="mainViewArea">
+			<ul class="mainCamera">
+				<li class="leftInfo">
+					<camera-gauge-side ng-model="rollGaugeData" guage-side="left"></camera-gauge-side>
+
+
+					<!--
+                    <img src="images/temp/temLeftImg.jpg" alt="">
+-->
+				</li>
+				<li class="viewArea">
+					<div class="topInfo">
+						<camera-gauge-top ng-model="directionGaugeData"></camera-gauge-top>
+						<!-- <button id="btnStart" class="btn btn-default">Start/stop animation</button>
+
+                        <img src="images/temp/temTopimg.jpg" alt="">   -->
+					</div>
+
+
+					<div class="mainView" id="mainView">
+						<!-- Switch -->
+						<!--                        <img src="images/temp/temView03.jpg" alt="">-->
+						<tgos-video winid='XnsSdkWindow1' kindplayer='playerdata[0]'></tgos-video>
+					</div>
+
+
+				</li>
+				<li class="rightInfo">
+
+					<camera-gauge-side ng-model="pitchGaugeData" guage-side="right"></camera-gauge-side>
+
+					<!--
+                    <img src="images/temp/temRightImg.jpg" alt=""> -->
+				</li>
+			</ul>
+
+		</div>
+
+
+		<div class="controlArea">
+			<!-- minimap area -->
+			<div class="miniMap">
+				<dl class="minView" style="z-index: 9999;" id="smallView">
+					<dt>Camera_1 Video</dt>
+					<dd ng-dblclick="switchView('Camera_1')">
+
+						<!-- Switch -->
+						<!--                            <img src="images/temp/temMinView.jpg" alt="">-->
+						<tgos-video winid='XnsSdkWindow2' kindplayer='playerdata[1]'></tgos-video>
+					</dd>
+				</dl>
+
+				<div id="map" class="map" style="height: 100%;" ng-dblclick="goToMain()" ng-controller="mapCtrl" ng-init='init()'>
+					<div id="popup"></div>
+				</div>
+
+				<!--  <img ng-dblclick="goToMain()" src="images/temp/temMinMap.jpg" alt="">  -->
+			</div>
+
+
+
+			<!-- video control area -->
+			<div class="ptzControl">
+
+				<div>
+					<!-- -->
+					<div class="direction">
+						<button type="button" title="STOP" class="dirstop"><span class="blind">STOP</span></button>
+
+						<button type="button" title="TOP" class="dirtop"><span class="blind">TOP</span></button>						
+						<button type="button" title="RIGHT" class="dirright"><span class="blind">RIGHT</span></button>
+						<button type="button" title="BOTTOM" class="dirbottom"><span class="blind">BOTTOM</span></button>
+						<button type="button" title="LEFT" class="dirLeft"><span class="blind">LEFT</span></button>
+
+						<button type="button" title="TOP" class="dirtopLeft"><span class="blind">TOP</span></button>						
+						<button type="button" title="RIGHT" class="dirtopRight"><span class="blind">RIGHT</span></button>
+						<button type="button" title="BOTTOM" class="dirbottomLeft"><span class="blind">BOTTOM</span></button>
+						<button type="button" title="LEFT" class="dirbottomRight"><span class="blind">LEFT</span></button>
+					</div>
+
+
+					<div class="controlTypeA">
+						<dl  ng-model="dayMight()">
+							<dt>Day / Night</dt>
+							<dd><button type="button" title="Day" class="day on"><span class="blind">Day</span></button> <button type="button" title="Night" class="night"><span class="blind">Night</span></button></dd>				
+						</dl>
+						<dl>
+							<dt>Zoom</dt>
+							<dd><button type="button" title="Zoom In" class="plus"><span class="blind">Zoom In</span></button> <button type="button" title="Zoom Out" class="minus"><span class="blind">Zoom Out</span></button></dd>
+						</dl>
+						<dl>
+							<dt>Focus</dt>
+							<dd><button type="button" title="Focus In" class="focusIn"><span class="blind">Focus In</span></button> <button type="button" title="Focus Out" class="focusOut"><span class="blind">Focus Out</span></button></dd>
+						</dl>								
+					</div>
+
+					 <div  class="controlTypeB"> 
+					 	<dl>
+					 		<dt>Speed</dt>
+							<dd class="speedSlide"><div id="blue" ui-slider="colorpicker.options" data-min="0" data-max="80" ng-model="colorpicker.blue2"></div></dd>
+							<dd class="speedValue"><input type="text" disabled="disabled" ng-model="colorpicker.blue2" /></dd>
+					 	</dl> 
+               		 </div>
+
+               		
+
+               		 <div class="controlInfo"> 
+               		 	<dl>
+               		 		<dt class="icoPan">Pan</dt>
+               		 		<dd>22.3&#176;</dd>
+               		 	</dl> 
+               		 	<dl>
+               		 		<dt class="icoTilt">Tilt</dt>
+               		 		<dd>22.3&#176;</dd>
+               		 	</dl> 
+               		 	<dl>
+               		 		<dt class="icoZoom">Zoom</dt>
+               		 		<dd>3X</dd>
+               		 	</dl> 
+               		 	<dl>
+               		 		<dt class="icofocus">focus</dt>
+               		 		<dd>56</dd>
+               		 	</dl>               		 	
+               		 
+               		 </div>
+
+                </div>
+             </div>			          
+		</div>
+		<tgos-video-sdk></tgos-video-sdk>
+	</div>
+</content>
+
+
+
+<!-- connection List layer start-->
+<div class="connectionLayer">
+	<div class="dimed"></div>
+
+	<div class="droneListLeyer" >
+		<div class="popTop">
+			<img src="images/ico/icoConnectBg.png"> Connection List
+            <button type="button" class="closeTypeA" ng-click="connectClose()">
+                <span class=blind>닫기</span>
+            </button>
+        </div>
+		<dl>			
+			<dd class="listDroneA">
+			<!--ng-modal="droneSlide()" ng-click="ShiftLeft()" ng-click="ShiftRight()"-->
+				<div class="listDroneBoxA" >
+
+					<div class="droneBoxA">
+						<ul class="drone">
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone01"><label for="Drone01">Drone01</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone02"><label for="Drone02">Drone02</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone03"><label for="Drone03">Drone03</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone04"><label for="Drone04">Drone04</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone05"><label for="Drone05">Drone05</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone06"><label for="Drone06">Drone06</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone07"><label for="Drone07">Drone07</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone08"><label for="Drone08">Drone08</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone09"><label for="Drone09">Drone09</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone010"><label for="Drone10">Drone10</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone11"><label for="Drone11">Drone11</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone12"><label for="Drone12">Drone12</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone13"><label for="Drone13">Drone13</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone14"><label for="Drone14">Drone14</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li>
+								 <input type="checkbox" name="" class="type03" id="Drone15"><label for="Drone15">Drone15</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone16"><label for="Drone16">Drone16</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone17"><label for="Drone17">Drone17</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone18"><label for="Drone18">Drone18</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+						</ul>
+						<ul class="drone">
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone19"><label for="Drone19">Drone01</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone20"><label for="Drone20">Drone02</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone21"><label for="Drone21">Drone03</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone22"><label for="Drone22">Drone04</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone23"><label for="Drone23">Drone05</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone24"><label for="Drone24">Drone06</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone25"><label for="Drone25">Drone07</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone26"><label for="Drone26">Drone08</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone27"><label for="Drone27">Drone09</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone28"><label for="Drone28">Drone10</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone29"><label for="Drone29">Drone11</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone30"><label for="Drone30">Drone12</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone31"><label for="Drone31">Drone13</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone32"><label for="Drone32">Drone14</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone33"><label for="Drone33">Drone15</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone34"><label for="Drone34">Drone16</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone35"><label for="Drone35">Drone17</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+							<li class="off">
+								 <input type="checkbox" name="" class="type03" id="Drone36"><label for="Drone36">Drone18</label>
+								 <button type="button" class="droneSet" ng-click="adcanSet()" title="Advance Setting"><img src="images/btn/btnDroneSet.png"></button>
+							</li>
+						</ul>
+
+					</div>
+
+				</div>
+				<div class="slideBtnBoxA" >
+					<button type="button" class="btnleft" ng-click="ShiftLeftA()"><img src="images/btn/btnLeftTypeB.png"></button>
+					<span>1</span>
+					<button type="button" class="btnRight" ng-click="ShiftRightA()" ><img src="images/btn/btnRightTypeB.png"></button>
+				</div>				
+			</dd>
+			<dd class="buttonArea">
+				<button type="button" class="ok" >Connect</button>
+				<button type="button"  ng-click="connectClose()">Cancel</button>
+			</dd>
+
+		</dl>
+	</div>
+</div>
+<!-- connection List layer end-->
+
+<!-- Advance Setting layer start-->
+<div id="advancelLayer" style="display:none;">
+	<div class="dimed2"></div>
+
+	<div class="settingLeyer" >
+		<div class="popTop2">Advance Setting 
+			<div class="topIco2"><img src="images/btn/btnDroneSet.png"></div>
+            <button type="button" class="closeTypeA" ng-click="advanceClose()">
+                <span class=blind>닫기</span>
+            </button>
+        </div>
+		<dl>				
+			<dd>
+				<table>
+					<colgroup>
+						<col width="">
+						<col width="">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th><span class="setIp">IP</span></th>
+							<td><input type="text" name=""></td>
+						</tr>
+						<tr>
+							<th><span class="setPort">Port</span></th>
+							<td><input type="text" name=""></td>
+						</tr>
+					</tbody>
+				</table>								
+			</dd>
+			<dd>
+				<table>
+					<colgroup>
+						<col width="">
+						<col width="">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>Comm Type</th>
+							<td>
+								<select>
+									<option>TCP</option>
+									<option></option>
+									<option></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>Socket Type</th>
+							<td>
+								<select>
+									<option>Server</option>
+									<option></option>
+									<option></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>Portocol</th>
+							<td>
+								<select>
+									<option>Mavlink</option>
+									<option></option>
+									<option></option>
+								</select>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</dd>
+			
+			<dd class="buttonArea">
+				<button type="button" class="ok">Save</button>
+				<button type="button" ng-click="advanceClose()">Cancel</button>
+			</dd>
+
+		</dl>
+	</div>
+</div>
+<!-- Advance Setting layer end-->

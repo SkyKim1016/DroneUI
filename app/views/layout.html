@@ -1,0 +1,25 @@
+<section id="kind_monitoring_wrap" ng-controller="streamingCtrl">
+    <div id="status" class="sub_visual_1" ng-model="message" ng-init="subscribe(topic)" ng-controller="monitoringCtrl" >
+        <div id="status_content_wrap">
+            <div id="status_info">
+                yaw : {{ message.yaw }} <br/>
+                pitch : {{ message.pitch }} <br/>
+                roll : {{ message.roll }} <br/>
+            </div>
+            <div id='3d-screen'> </div>
+        </div>
+    </div>
+    
+    <div id="map_layout" class="sub_visual_2" ng-click="clickEvent('#map_layout')">
+        <div id="map"></div>
+    </div>
+    
+    <div id="controller" >
+        <div ng-include="pannel" ng-controller="pannelCtrl"></div>
+    </div>
+    
+    
+    <streaming ></streaming>
+    
+</section>
+

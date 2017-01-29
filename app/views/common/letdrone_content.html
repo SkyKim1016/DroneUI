@@ -1,0 +1,88 @@
+
+
+<!-- ng-if="cameraView" -->
+<content ng-if="cameraView">
+	<div class="cameraArea">
+		<div class="mainViewArea">
+
+			<ul class="mainCamera">
+				<li class="leftInfo"><img src="images/temp/temLeftImg.jpg" alt=""></li>
+				<li class="viewArea">
+					<div class="topInfo"><img src="images/temp/temTopimg.jpg" alt="">  </div>
+					<div class="mainView"><img src="images/temp/temView03.jpg" alt="">  </div>
+				</li>
+				<li class="rightInfo"><img src="images/temp/temRightImg.jpg" alt=""> </li>
+			</ul>
+
+		</div>
+
+
+		<div class="controlArea"> 
+				<!-- minimap area -->
+				<div class="miniMap">				
+					<dl class="minView">						
+						<dt>Camera_1 Video</dt>
+						<dd><img src="images/temp/temMinView.jpg" alt=""> </dd>
+					</dl>
+				<img src="images/temp/temMinMap.jpg" alt=""> 
+				</div>
+				
+				<!-- video control area -->
+				<div class="ptzControl">
+
+					<div>
+						<!-- -->
+						<div class="direction">11</div>
+
+						<div></div>
+
+					</div>
+
+					<div></div>
+
+					<div></div>
+				</div>
+		</div>
+	</div>
+</content>
+
+
+
+
+<!-- 카메라 모달 뷰 -->
+<content ng-if="cameraModal">
+
+	<div class="listMenu">
+		<button type="button" class="droneList"><img src="images/btn/btnList.gif" alt="리스트"></button>
+		<ul class="listDepth01">
+			<li class="listObject">
+				<button type="button"><img src="images/btn/btnlistObject.gif" alt=""></button>
+			</li>
+			<li class="listDrone"><button type="button"><img src="images/btn/btnlistDrone.gif" alt=""></button></li>
+			<li class="listCamera"><button type="button"><img src="images/btn/btnlistCamera.gif" alt=""></button></li>
+			<li class="listSensor"><button type="button"><img src="images/btn/btnlistSensor.gif" alt=""></button></li>
+		</ul>	
+	</div>
+	
+
+	<div class="cameraLayer">
+		<dl class="cLayerTypeA">
+			<dt><b>Drone-1</b> Flight Video <button type="button"><span class="blind">CLOSE</button></dt>
+			<dd><img src="images/temp/temView01.jpg" alt="" ng-click="expandCamera()"></dd>
+		</dl>
+
+		<dl class="cLayerTypeA">
+			<dt><b>Camera-2</b> Video <button type="button"><span class="blind">CLOSE</button></dt>
+			<dd><img src="images/temp/temView02.jpg" ng-click="expandCamera()" alt=""></dd>
+		</dl>		
+	</div>
+</content>
+
+
+
+<!-- 지도 뷰 -->
+<content>
+	<div class="mapArea">
+		<div id="map" class="map" ng-controller="mapCtrl" ng-init='init()'><div id="popup"></div></div>
+	</div>
+</content>

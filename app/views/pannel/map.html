@@ -1,0 +1,22 @@
+<div class="btn-group btn-group-sm" role="group" aria-label="Draw">
+    
+    <button ng-click = "drawObject($event)" id="pan" type="button" class="btn btn-primary">Pan</button>
+    <button ng-click = "drawObject($event)" id="select" type="button" class="btn btn-default">Select</button>
+    <button ng-click = "drawObject($event)" id="point" type="button" class="btn btn-success">Point</button>
+    <button ng-click = "drawObject($event)" id="line" type="button" class="btn btn-success">Line</button>
+    <button ng-click = "drawObject($event)" id="polygon" type="button" class="btn btn-success">Polygon</button>
+    <button ng-click = "drawObject($event)" id="modify" type="button" class="btn btn-danger">Modify</button>
+    <button ng-click = "drawObject($event)" id="delete" type="button" class="btn btn-danger">Delete</button>
+    <button ng-click = "drawObject($event)" id="deleteAll" type="button" class="btn btn-danger">Delete All</button>
+    <button ng-click = "drawObject($event)" id="save" type="button" class="btn btn-success">Save</button>
+</div>
+<button class="btn btn-default" ng-click = "doBounce('london');">Bounce to London</button>
+<button class="btn btn-default" ng-click = "doBounce('rome');">Bounce to Rome</button>
+<button class="btn btn-default" ng-click = "doBounce('korea');">Bounce to Korea</button>
+<button class="btn btn-default" ng-click = "doPan('london');">Pan to London</button>
+<button class="btn btn-default" ng-click = "doPan('rome');">Pan to Rome</button>
+<button class="btn btn-default" ng-click = "doPan('korea');">Pan to Korea</button>
+<button class="btn btn-default" ng-click = "doRotate();">Rotate</button>
+<button class="btn btn-default" ng-click = "doZoom(2);">Zoom out</button>
+<button class="btn btn-default" ng-click = "doZoom(0.5);">Zoom in</button>
+

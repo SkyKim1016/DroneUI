@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>drone</title>
+    <link rel="stylesheet" type="text/css" href="/styles/default.css" >
+    
+    <link href="/kind/base_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/kind/base_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="/kind/base_components/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+
+    <script src="/kind/base_components/jquery/jquery.js"></script>
+    <script type="text/javascript" src="/scripts/common.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.ezmark.min.js"></script>
+  </head>
+  <body>
+  <div class="skipNavi"><a href="#container">본문으로 바로가기</a></div>
+  <div id="wrap">
+      <header id="header">
+          <img src="../images/contents/header.png" />
+      </header>
+      <!-- //header -->
+
+      <div id="container">
+          <div class="contents">
+              <div class="mapArea" ng-controller="dashboardCtrl">
+<!--                  <div data-ng-include data-src="'./views/map.html'" ng-controller="mapCtrl" class="mainMap"></div>-->
+                  <div id="map" ng-controller= "mapCtrl" class="map" ng-init='init()'><div id="popup"></div></div>
+              </div>
+             <!-- <div class="drone_location"><img src="../images/contents/drone_location.png" /></div> by jhlee-->
+              <div class="leftBtnGrp">
+            <div class="icoBtn ico01">
+                <a href="javascript:void(0)"><span class="blind">Object List</span></a>
+                <div class="subList">
+                    <h2>Object List</h2>
+                    <ul>
+                        <li><input type="checkbox" id="obj01" class="input_ez" /><label for="obj01">Geo-fence</label></li>
+                        <li><input type="checkbox" id="obj02" class="input_ez" /> <label for="obj02">Obstacle</label></li>
+                        <li><input type="checkbox" id="obj03" class="input_ez" /> <label for="obj03">Zone</label></li>
+                        <li><input type="checkbox" id="obj04" class="input_ez" /> <label for="obj04">Nofly Zone</label></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="icoBtn ico02">
+                <a href="javascript:void(0)"><span class="blind">Drone List</span></a>
+                <div class="subList">
+                    <h2>Drone List</h2>
+                    <ul>
+                        <li><input type="checkbox" id="dro01" class="input_ez" /><label for="dro01">Drone 1</label></li>
+                        <li><input type="checkbox" id="dro02" class="input_ez" /> <label for="dro02">Drone 2</label></li>
+                        <li><input type="checkbox" id="dro03" class="input_ez" /> <label for="dro03">Drone 3</label></li>
+                        <li><input type="checkbox" id="dro04" class="input_ez" /> <label for="dro04">Drone 4</label></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="icoBtn ico03">
+               <a href="javascript:void(0)"><span class="blind">Camera List</span></a>
+                <div class="subList">
+                    <h2>Camera List</h2>
+                    <ul>
+                        <li><input type="checkbox" id="cam01" class="input_ez" /><label for="cam01">Camera1</label></li>
+                        <li><input type="checkbox" id="cam02" class="input_ez" /> <label for="cam02">Camera2</label></li>
+                        <li><input type="checkbox" id="cam03" class="input_ez" /> <label for="cam03">Camera3</label></li>
+                        <li><input type="checkbox" id="cam04" class="input_ez" /> <label for="cam04">Camera4</label></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="icoBtn ico04">
+                <a href="javascript:void(0)"><span class="blind">Senser List</span></a>
+                 <div class="subList">
+                    <h2>Senser List</h2>
+                    <ul>
+                        <li><input type="checkbox" id="sen01" class="input_ez" /><label for="cam01">senser1</label></li>
+                        <li><input type="checkbox" id="sen02" class="input_ez" /> <label for="cam02">senser2</label></li>
+                        <li><input type="checkbox" id="sen03" class="input_ez" /> <label for="cam03">senser3</label></li>
+                        <li><input type="checkbox" id="sen04" class="input_ez" /> <label for="cam04">senser4</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+              <div class="rightBtnGrp">
+                <div class="droneMv">
+                    <a href="javascript:void(0)" class="btnView"><span class="blind">Drone video</span></a>
+                    <div class="mvView" style="display:none">
+                        <a href="javascript:void(0)" class="tit"><em>Drone1</em> Flight Video</a>
+                        <div class="mvarea">
+                            <img src="../images/contents/drone_mv.png" />
+                        </div>
+                        <div class="ptzControl"><a href="javascript:void(0)"><img src="../images/btn/btn_ptzControl.png" /></a></div>
+                    </div>
+                </div>
+                <div class="cameraMv">
+                    <a href="javascript:void(0)" class="btnView"><span class="blind">Camera video</span></a>
+                    <div class="mvView" style="display:none">
+                        <a href="javascript:void(0)" class="tit"><em>Camera1</em> Video</a>
+                        <div class="mvarea">
+                            <img src="../images/contents/camera_mv.png" />
+                        </div>
+                        <div class="ptzControl"><a href="javascript:void(0)"><img src="../images/btn/btn_ptzControl.png" /></a></div>
+                    </div>
+                </div>
+                <div class="controlMv"><a href="javascript:void(0)"><span class="blind">Control</span></a></div>
+              </div>
+              <!-- //rightBtnGrp -->
+              
+              <div class="gaugeinfoW">
+                  <div class="gaugein">
+                      <div class="foontInfo"><img src="../images/contents/footInfo.png" /></div>
+                      <div class="controlCon" ng-controller="mapCtrl">
+                          <a href="javascript:void(0)"><img src="../images/icon/location.png" alt="location" ng-click="moveMapCenter()"></a>
+                          <a href="javascript:void(0)"><img src="../images/icon/zoom_in.png" alt="zoom-in" ></a>
+                          <a href="javascript:void(0)"><img src="../images/icon/zoom_out.png" alt="zoom-out" ></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- //container -->
+    </div >
+    <!-- //wrap --> 
+  </body>
+</html>

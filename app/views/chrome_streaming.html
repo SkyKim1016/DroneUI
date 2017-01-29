@@ -1,0 +1,28 @@
+<div ng-controller='streamingCtrl'>
+	<dl class="cLayerTypeA">
+		<dt><b>Drone-1</b> Flight Video <button type="button"><span class="blind">CLOSE</button></dt>
+		<!--			<dd><a ng-click="goToCamera()"><img src="images/temp/temView01.jpg" alt="" ng-click="expandCamera()"></a></dd>-->
+		<dd>
+			<a ng-click="goToCamera()">
+				<kind-stream ID=XnsSdkWindow1 kindplayer="playerdata[0]" ng-click="clickEvent($event)"></kind-stream>
+			</a>
+		</dd>
+
+	</dl>
+	<dl class="cLayerTypeA">
+		<dt>
+				<b>Camera-2</b> Video 
+				<button type="button">
+					<span class="blind">CLOSE</span>
+				</button>
+			</dt>
+		<dd>
+			<a ng-click="goToCamera()">
+				<!--					<img src="images/temp/temView02.jpg" ng-click="expandCamera()" alt="">-->
+				<kind-stream ID=XnsSdkWindow2 kindplayer="playerdata[1]" ng-click="clickEvent($event)"></kind-stream>
+			</a>
+		</dd>
+	</dl>
+</div>
+
+</div>
